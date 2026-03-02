@@ -1,0 +1,98 @@
+package projects.uah.project_manager.model;
+
+import java.time.LocalDate;
+
+/**
+ * Represents a project in the Project Manager
+ * A project has a name, description, due date, and a status
+ * indicating whether it is active or complete.
+ *
+ * @author XC-Le
+ * @version 1.0
+ */
+public class Project {
+
+    /**
+     * Constructs a new Project with the specified details.
+     *
+     * @param name        the title of the project
+     * @param description a brief description of the project
+     * @param dueDate     the due date of the project
+     * @param isActive    true if the project is active, false if complete
+     */
+    public Project(String name, String description, LocalDate dueDate, boolean isActive) {
+
+    }
+
+    /**
+     * Returns the name of the project.
+     *
+     * @return the project name
+     */
+    public String getName() {
+        return null;
+    }
+
+    /**
+     * Sets the name of the project.
+     *
+     * @param name the new project name
+     */
+    public void setName(String name) {
+
+    }
+
+    /**
+     * Returns the description of the project.
+     *
+     * @return the project description
+     */
+    public String getDescription() {
+        return null;
+    }
+
+    /**
+     * Sets the description of the project.
+     *
+     * @param description the new project description
+     */
+    public void setDescription(String description) {
+
+    }
+
+    /**
+     * Returns the due date of the project.
+     *
+     * @return the project due date
+     */
+    public LocalDate getDueDate() {
+        return null;
+    }
+
+    /**
+     * Sets the due date of the project.
+     *
+     * @param dueDate the new due date
+     */
+    public void setDueDate(LocalDate dueDate) {
+
+    }
+
+    /**
+     * Returns whether the project is currently active.
+     *
+     * @return true if the project is active, false if complete
+     */
+    public boolean isActive() {
+        return false;
+    }
+
+    /**
+     * Sets the active status of the project.
+     *
+     * @param isActive true to mark as active, false to mark as complete
+     */
+    public void setActive(boolean isActive) {
+
+    }
+}
