@@ -1,34 +1,21 @@
 package projects.uah.project_manager.display;
 
-import javax.swing.JPanel;
+import projects.uah.project_manager.model.Project;
 
-/**
- * A Swing panel that displays and manages the list of tasks for a selected project.
- * Allows users to view, add, and interact with tasks through the graphical interface.
- *
- * @author XC-Le
- * @version 1.0
- */
+import javax.swing.*;
+import java.awt.*;
+
 public class TaskPanel extends JPanel {
 
     /**
      * Constructs a new TaskPanel and initializes its UI components.
      */
-    public TaskPanel() {
-
-    }
-
-    /**
-     * Initializes and arranges the UI components within this panel.
-     */
-    private void initComponents() {
-
-    }
-
-    /**
-     * Refreshes the panel to reflect the current list of tasks.
-     */
-    public void refresh() {
-
+    public TaskPanel(Project project) {
+        setLayout(new BorderLayout());
+ 
+       // Placeholder so the tab shows something
+        JLabel placeholder = new JLabel("Tasks for: " + project.getName());
+        placeholder.setHorizontalAlignment(SwingConstants.CENTER);
+        add(placeholder, BorderLayout.CENTER);
     }
 }

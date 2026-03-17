@@ -10,4 +10,11 @@
         <maven.compiler.release>25</maven.compiler.release>
         <exec.mainClass>projects.uah.project_manager.Project_Manager</exec.mainClass>
     </properties>
+    <dependencies>
+    <dependency>
+        <groupId>com.formdev</groupId>
+        <artifactId>flatlaf</artifactId>
+        <version>3.4</version>
+    </dependency>
+</dependencies>
 </project>

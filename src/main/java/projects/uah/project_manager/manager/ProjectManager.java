@@ -1,7 +1,6 @@
 package projects.uah.project_manager.manager;
 
 import projects.uah.project_manager.model.Project;
-
 import java.util.List;
 
 /**

@@ -1,6 +1,8 @@
 package projects.uah.project_manager.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a project in the Project Manager
@@ -12,6 +14,12 @@ import java.time.LocalDate;
  */
 public class Project {
 
+    private String name;
+    private String description;
+    private LocalDate dueDate;
+    private boolean isActive;
+    private List<Task> tasks;
+    
     /**
      * Constructs a new Project with the specified details.
      *
@@ -21,7 +29,11 @@ public class Project {
      * @param isActive    true if the project is active, false if complete
      */
     public Project(String name, String description, LocalDate dueDate, boolean isActive) {
-
+        this.name=name;
+        this.description=description;
+        this.dueDate=dueDate;
+        this.isActive=isActive;
+        this.tasks = new ArrayList<>();
     }
 
     /**
@@ -30,7 +42,7 @@ public class Project {
      * @return the project name
      */
     public String getName() {
-        return null;
+        return this.name;
     }
 
     /**
