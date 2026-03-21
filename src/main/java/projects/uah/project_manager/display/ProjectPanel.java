@@ -55,10 +55,15 @@ public class ProjectPanel extends JPanel {
         addProjectBtn.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Project name:");
             System.out.println("Name entered: " + name); // add this
-            if (name != null && !name.isBlank()) {
+            boolean exists = projects.stream().anyMatch(p -> p.getName().equalsIgnoreCase(name));
+            if (name != null && !name.isBlank() && !exists) {
+                
                 projects.add(new Project(name, "", LocalDate.now(), true));
                 reloadTabs();
                 projectTabs.setSelectedIndex(projectTabs.getTabCount() - 1);
+            }
+            if(exists){
+                JOptionPane.showMessageDialog(this, "A project with that name already exists.");
             }
         });
 
