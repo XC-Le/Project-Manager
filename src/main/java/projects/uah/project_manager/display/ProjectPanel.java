@@ -54,16 +54,18 @@ public class ProjectPanel extends JPanel {
         // --- Listeners ---
         addProjectBtn.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Project name:");
-            System.out.println("Name entered: " + name); // add this
+            System.out.println("Name entered: " + name);
+            
+            //checks if project name exists
             boolean exists = projects.stream().anyMatch(p -> p.getName().equalsIgnoreCase(name));
-            if (name != null && !name.isBlank() && !exists) {
+            
+            if(exists){
+                JOptionPane.showMessageDialog(this, "A project with that name already exists.");
+            } else if (name != null && !name.isBlank()) {
                 
                 projects.add(new Project(name, "", LocalDate.now(), true));
                 reloadTabs();
                 projectTabs.setSelectedIndex(projectTabs.getTabCount() - 1);
-            }
-            if(exists){
-                JOptionPane.showMessageDialog(this, "A project with that name already exists.");
             }
         });
 
@@ -104,6 +106,7 @@ public class ProjectPanel extends JPanel {
                 
                 if(double_check == JOptionPane.YES_OPTION){
                     int index = project_list.getSelectedIndex();
+                    projects.get(index).setActive(false);
                     del_projects.add(projects.get(index));
                     projects.remove(index);
                     projectTabs.removeTabAt(index);
@@ -112,7 +115,7 @@ public class ProjectPanel extends JPanel {
             
         });
         
-        //Border modifications
+        // --- Border modifications ---
         topBar.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1)); 
         projectTabs.setBorder(new CompoundBorder(
                 BorderFactory.createEmptyBorder(5,5,5,5),

@@ -51,7 +51,7 @@ public class Project {
      * @param name the new project name
      */
     public void setName(String name) {
-
+        this.name=name;
     }
 
     /**
@@ -60,7 +60,7 @@ public class Project {
      * @return the project description
      */
     public String getDescription() {
-        return null;
+        return this.description;
     }
 
     /**
@@ -69,7 +69,7 @@ public class Project {
      * @param description the new project description
      */
     public void setDescription(String description) {
-
+        this.description=description;
     }
 
     /**
@@ -78,7 +78,7 @@ public class Project {
      * @return the project due date
      */
     public LocalDate getDueDate() {
-        return null;
+        return this.dueDate;
     }
 
     /**
@@ -87,7 +87,7 @@ public class Project {
      * @param dueDate the new due date
      */
     public void setDueDate(LocalDate dueDate) {
-
+        this.dueDate=dueDate;
     }
 
     /**
@@ -96,7 +96,7 @@ public class Project {
      * @return true if the project is active, false if complete
      */
     public boolean isActive() {
-        return false;
+        return this.isActive;
     }
 
     /**
@@ -105,6 +105,6 @@ public class Project {
      * @param isActive true to mark as active, false to mark as complete
      */
     public void setActive(boolean isActive) {
-
+        this.isActive=isActive;
     }
 }
