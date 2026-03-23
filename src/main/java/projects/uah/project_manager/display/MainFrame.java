@@ -69,8 +69,8 @@ public class MainFrame extends JFrame {
             if(exists){
                 JOptionPane.showMessageDialog(this, "A project with that name already exists.");
             } else if (name != null && !name.isBlank()) {
-                
-                projects.add(new Project(name, "", LocalDate.now(), true));
+                String description = JOptionPane.showInputDialog(this, "Project description:");
+                projects.add(new Project(name, description, LocalDate.now(), projects.size()+1 , true));
                 reloadTabs();
                 projectTabs.setSelectedIndex(projectTabs.getTabCount() - 1);
             }

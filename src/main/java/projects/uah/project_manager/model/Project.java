@@ -17,6 +17,7 @@ public class Project {
     private String name;
     private String description;
     private LocalDate dueDate;
+    private int priority;
     private boolean isActive;
     private List<Task> tasks;
     
@@ -25,13 +26,15 @@ public class Project {
      *
      * @param name        the title of the project
      * @param description a brief description of the project
+     * @param priority    determines the order of projects
      * @param dueDate     the due date of the project
      * @param isActive    true if the project is active, false if complete
      */
-    public Project(String name, String description, LocalDate dueDate, boolean isActive) {
+    public Project(String name, String description, LocalDate dueDate, int priority, boolean isActive) {
         this.name=name;
         this.description=description;
         this.dueDate=dueDate;
+        this.priority=priority;
         this.isActive=isActive;
         this.tasks = new ArrayList<>();
     }
