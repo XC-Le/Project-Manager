@@ -3,6 +3,7 @@ package projects.uah.project_manager.display;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import java.awt.*;
+import java.awt.event.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import projects.uah.project_manager.model.Project;
@@ -37,6 +38,7 @@ public class MainFrame extends JFrame {
         // --- Top button bar ---
         JButton addProjectBtn = new JButton("New Project");
         JButton delProjectBtn = new JButton("Delete");
+        JButton editPriorityBtn = new JButton("Edit Priority");
         JButton delProjectLst = new JButton("Check Deleted");
         
         
@@ -49,6 +51,7 @@ public class MainFrame extends JFrame {
         
         // --- Right buttons ---
         JPanel rightBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightBtns.add(editPriorityBtn);
         rightBtns.add(delProjectLst);
 
         topBar.add(leftBtns, BorderLayout.WEST);
@@ -119,6 +122,10 @@ public class MainFrame extends JFrame {
                     projectTabs.removeTabAt(index);
                 }
             }
+            
+        });
+        
+        editPriorityBtn.addActionListener(e -> {
             
         });
         
