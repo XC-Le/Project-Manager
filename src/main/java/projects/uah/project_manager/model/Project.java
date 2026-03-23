@@ -110,4 +110,23 @@ public class Project {
     public void setActive(boolean isActive) {
         this.isActive=isActive;
     }
+    
+    /**
+     * Returns the priority of the project.
+     *
+     * @return the integer value for the priority
+     */
+    public int getPriority() {
+        return this.priority;
+    }
+
+    /**
+     * Sets the priority of the project.
+     *
+     * @param priority sets the priority of the project to an integer value
+     */
+    public void setPriority(int priority) {
+        this.priority=priority;
+    }    
+
 }
