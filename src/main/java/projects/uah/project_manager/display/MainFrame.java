@@ -176,7 +176,7 @@ public class MainFrame extends JFrame {
         projectTabs.removeAll();
         for (Project project : pm.getProjects()) {
             System.out.println("Adding tab: " + project.getName());
-            projectTabs.addTab(project.getName(), new TaskPanel(project));
+            projectTabs.addTab(project.getName(), new ProjectPanel(project));
         }
         projectTabs.revalidate();
         projectTabs.repaint();    

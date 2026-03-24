@@ -2,6 +2,7 @@ package projects.uah.project_manager.display;
 
 import java.awt.*;
 import javax.swing.*;
+import projects.uah.project_manager.model.Project;
 
 
 /**
@@ -17,7 +18,12 @@ public class ProjectPanel extends JPanel {
     /**
      * Constructs a new ProjectPanel and initializes its UI components.
      */
-    public ProjectPanel() {
-
+    public ProjectPanel(Project project) {
+        setLayout(new BorderLayout());
+ 
+       // Placeholder so the tab shows something
+        JLabel placeholder = new JLabel("Tasks for: " + project.getName());
+        placeholder.setHorizontalAlignment(SwingConstants.CENTER);
+        add(placeholder, BorderLayout.CENTER);
     }
 }
