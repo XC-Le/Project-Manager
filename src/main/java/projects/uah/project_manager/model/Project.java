@@ -17,7 +17,6 @@ public class Project {
     private String name;
     private String description;
     private LocalDate dueDate;
-    private int priority;
     private boolean isActive;
     private List<Task> tasks;
     
@@ -26,15 +25,13 @@ public class Project {
      *
      * @param name        the title of the project
      * @param description a brief description of the project
-     * @param priority    determines the order of projects
      * @param dueDate     the due date of the project
      * @param isActive    true if the project is active, false if complete
      */
-    public Project(String name, String description, LocalDate dueDate, int priority, boolean isActive) {
+    public Project(String name, String description, LocalDate dueDate, boolean isActive) {
         this.name=name;
         this.description=description;
         this.dueDate=dueDate;
-        this.priority=priority;
         this.isActive=isActive;
         this.tasks = new ArrayList<>();
     }
@@ -112,21 +109,21 @@ public class Project {
     }
     
     /**
-     * Returns the priority of the project.
+     * Returns the tasks for the project.
      *
-     * @return the integer value for the priority
+     * @return the list of tasks
      */
-    public int getPriority() {
-        return this.priority;
+    public List<Task> getTasks() {
+        return this.tasks;
     }
 
     /**
-     * Sets the priority of the project.
+     * Sets the tasks for the project.
      *
-     * @param priority sets the priority of the project to an integer value
+     * @param tasks the tasks for the project
      */
-    public void setPriority(int priority) {
-        this.priority=priority;
-    }    
+    public void setTasks(List<Task> tasks) {
+        this.tasks=tasks;
+    }
 
 }

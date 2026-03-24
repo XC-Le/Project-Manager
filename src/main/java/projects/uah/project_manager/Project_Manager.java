@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import java.awt.Font;
 import projects.uah.project_manager.display.MainFrame;
+import projects.uah.project_manager.manager.*;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 /**
@@ -31,7 +32,8 @@ public class Project_Manager {
 
         
         SwingUtilities.invokeLater(() -> {
-            new MainFrame();
+            ProjectManager pm = new ProjectManager();
+            new MainFrame(pm);
         });
     }
 }

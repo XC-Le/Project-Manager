@@ -1,5 +1,6 @@
 package projects.uah.project_manager.manager;
 
+import java.util.ArrayList;
 import projects.uah.project_manager.model.Project;
 import java.util.List;
 
@@ -12,57 +13,65 @@ import java.util.List;
  */
 public class ProjectManager {
 
+    private final java.util.List<Project> projects = new ArrayList<>();
+    private final java.util.List<Project> del_projects = new ArrayList<>();
+    
     /**
      * Constructs a new ProjectManager with an empty project list.
      */
     public ProjectManager() {
-
-    }
-
-    /**
-     * Adds a new project to the manager.
-     *
-     * @param project the project to add
-     */
-    public void addProject(Project project) {
-
-    }
-
-    /**
-     * Removes a project from the manager by button.
-     *
-     * project removed from list 
-     */
-    public void removeProject() {
         
     }
-
+    
     /**
-     * Retrieves a project by its name.
-     *
-     * @param name the name of the project to find
-     * @return the matching Project, or null if not found
+     * Adds a project object to the project list
+     * 
+     * @param project Project object that is being added
      */
-    public Project getProject(String name) {
-        return null;
+    public void addProject(Project project){
+        projects.add(project);
     }
-
+    
     /**
-     * Returns all projects currently managed.
-     *
-     * @return a list of all projects
+     * Moves a project by removing a project from the list and reinserting it elsewhere
+     * 
+     * @param project object that is being moved
+     * @param initialIndex of the project being moved from
+     * @param finalIndex of where to project is moved to
      */
-    public List<Project> getAllProjects() {
-        return null;
+    public void moveProject(Project project, int initialIndex, int finalIndex){
+        projects.remove(initialIndex);
+        projects.add(finalIndex, project);
     }
-
+    
     /**
-     * Returns all projects filtered by their active status.
-     *
-     * @param isActive true to retrieve active projects, false for completed
-     * @return a list of projects matching the given status
+     * Removes a project from the list
+     * 
+     * @param index of project being removed
      */
-    public List<Project> getProjectsByStatus(boolean isActive) {
-        return null;
+    public void removeProject(int index){
+        projects.get(index).setActive(false);
+        del_projects.add(projects.get(index));
+        projects.remove(index);
     }
+    
+    /**
+     * Returns list of all projects
+     * 
+     * @return projects
+     */
+    public List<Project> getProjects(){
+        return projects;
+    }
+    
+    /**
+     * Returns the one project from the list of projects
+     * 
+     * @param index of project 
+     * @return project at index
+     */
+    public Project getProject(int index){
+        return projects.get(index);
+    }
+    
 }
