@@ -6,11 +6,16 @@ import java.time.LocalDate;
  * Represents a task within a project in the Project Manager application.
  * A task has a name, description, due date, and a priority level.
  *
- * @author XC-Le
- * @version 1.0
+ * @authors XC-Le and Duncan Williams
+ * @version 1.2
  */
 public class Task {
 
+    private String name;
+    private String description;
+    private LocalDate dueDate;
+    private int priority;
+    private boolean isComplete;
     /**
      * Constructs a new Task with the specified details.
      *
@@ -19,8 +24,12 @@ public class Task {
      * @param dueDate     the due date of the task
      * @param priority    the priority level of the task
      */
-    public Task(String name, String description, LocalDate dueDate, int priority) {
-
+    public Task(String name, String description, LocalDate dueDate, int priority, boolean isComplete) {
+        this.name = name;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.isComplete = isComplete;
     }
 
     /**
@@ -29,7 +38,7 @@ public class Task {
      * @return the task name
      */
     public String getName() {
-        return null;
+        return this.name;
     }
 
     /**
@@ -38,7 +47,7 @@ public class Task {
      * @param name the new task name
      */
     public void setName(String name) {
-
+        this.name = name;
     }
 
     /**
@@ -47,7 +56,7 @@ public class Task {
      * @return the task description
      */
     public String getDescription() {
-        return null;
+        return this.description;
     }
 
     /**
@@ -56,7 +65,7 @@ public class Task {
      * @param description the new task description
      */
     public void setDescription(String description) {
-
+        this.description = description;
     }
 
     /**
@@ -74,7 +83,7 @@ public class Task {
      * @param dueDate the new due date
      */
     public void setDueDate(LocalDate dueDate) {
-
+        this.dueDate = dueDate;
     }
 
     /**
@@ -83,7 +92,7 @@ public class Task {
      * @return the priority level
      */
     public int getPriority() {
-        return 0;
+        return this.priority;
     }
 
     /**
@@ -92,6 +101,24 @@ public class Task {
      * @param priority the new priority level
      */
     public void setPriority(int priority) {
+        this.priority = priority;
+    }
+ 
+    /**
+     * Returns whether the task is complete or not.
+     *
+     * @return the completion value
+     */
+    public boolean getCompletion() {
+        return this.isComplete;
+    }
 
+    /**
+     * Sets whether the task is complete or not.
+     *
+     * @param isComplete true = task is finished, false = task is not finished
+     */
+    public void setCompletion(boolean isComplete) {
+        this.isComplete = isComplete;
     }
 }
