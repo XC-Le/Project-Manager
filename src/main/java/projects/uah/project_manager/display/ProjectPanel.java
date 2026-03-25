@@ -20,6 +20,12 @@ public class ProjectPanel extends JPanel {
      */
     public ProjectPanel(Project project) {
         setLayout(new BorderLayout());
+        
+        JButton addTaskBtn = new JButton("New Task");
+        
+        JPanel tasks = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        tasks.add(addTaskBtn);
+        add(tasks, BorderLayout.WEST);
  
        // Placeholder so the tab shows something
         JLabel placeholder = new JLabel("Tasks for: " + project.getName());
