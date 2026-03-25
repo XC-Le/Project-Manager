@@ -7,7 +7,7 @@ import java.time.LocalDate;
  * A task has a name, description, due date, and a priority level.
  *
  * @authors XC-Le and Duncan Williams
- * @version 1.2
+ * @version 1.3
  */
 public class Task {
 
@@ -23,6 +23,7 @@ public class Task {
      * @param description a brief description of the task
      * @param dueDate     the due date of the task
      * @param priority    the priority level of the task
+     * @param isComplete  whether or not the task is complete
      */
     public Task(String name, String description, LocalDate dueDate, int priority, boolean isComplete) {
         this.name = name;
@@ -74,7 +75,7 @@ public class Task {
      * @return the task due date
      */
     public LocalDate getDueDate() {
-        return null;
+        return this.dueDate;
     }
 
     /**
