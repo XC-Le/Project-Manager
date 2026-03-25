@@ -4,7 +4,8 @@ import java.awt.*;
 import java.time.LocalDate;
 import javax.swing.*;
 import projects.uah.project_manager.model.Project;
-
+import projects.uah.project_manager.model.Task;
+import projects.uah.project_manager.manager.TaskManager;
 
 /**
  * A Swing panel that displays and manages the list of projects.
@@ -34,6 +35,7 @@ public class ProjectPanel extends JPanel {
         addTaskBtn.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Task name:");
             System.out.println("Task name entered: " + name);
+            //project.addTask(new Task(name, "", LocalDate.now(), 1, false));
         });
        
         // Placeholder so the tab shows something
