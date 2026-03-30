@@ -74,4 +74,12 @@ public class ProjectManager {
         return projects.get(index);
     }
     
+    /**
+     * Returns list of all deleted projects
+     * 
+     * @return del_projects
+     */
+    public List<Project> getDeletedProjects(){
+        return del_projects;
+    }
 }
