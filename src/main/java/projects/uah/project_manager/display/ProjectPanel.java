@@ -19,28 +19,49 @@ public class ProjectPanel extends JPanel {
     
     /**
      * Constructs a new ProjectPanel and initializes its UI components.
+     * @param project
      */
     public ProjectPanel(Project project) {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout());    
+        setVisible(true);
         
-        // New task button
+        // New button panel
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        
+        // Add task button added to the right side of project panel
+        JPanel rightBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton addTaskBtn = new JButton("New Task");
+        rightBtns.add(addTaskBtn, BorderLayout.EAST);
+        buttonPanel.add(rightBtns);
+        
+        add(buttonPanel, BorderLayout.NORTH);
         
         JPanel tasks = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        tasks.add(addTaskBtn);
         add(tasks, BorderLayout.WEST);
-         // Listeners 
+        
+
+        // Listeners 
         
         // listener for add button
         addTaskBtn.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Task name:");
             System.out.println("Task name entered: " + name);
-            //project.addTask(new Task(name, "", LocalDate.now(), 1, false));
-        });
-       
-        // Placeholder so the tab shows something
-        JLabel placeholder = new JLabel("Tasks for: " + project.getName());
-        placeholder.setHorizontalAlignment(SwingConstants.CENTER);
-        add(placeholder, BorderLayout.CENTER);
+            
+            boolean exists = project.getTasks().stream().anyMatch(p -> p.getName().equalsIgnoreCase(name));
+
+            if(exists){
+                JOptionPane.showMessageDialog(this, "A tasks with that name already exists in this project.");
+            } else {
+                project.addTask(new Task(name, "", LocalDate.now(), 1, false));
+                reloadTasks(project);
+            }
+        });   
+    }
+    
+    private void reloadTasks(Project project) {
+        System.out.println("reloadTabs called, projects size: " + project.getTasks().size());
+        
+        // removes all tabs to add from scratch
+   
     }
 }
