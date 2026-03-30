@@ -48,7 +48,7 @@ public class MainFrame extends JFrame {
         
         
         JPanel topBar = new JPanel(new BorderLayout());
-        
+
         // Left buttons 
         JPanel leftBtns = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftBtns.add(addProjectBtn);
