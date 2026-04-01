@@ -2,6 +2,7 @@ package projects.uah.project_manager.display;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.border.CompoundBorder;
 import projects.uah.project_manager.model.Task;
 
 public class TaskPanel extends JPanel {
@@ -12,8 +13,10 @@ public class TaskPanel extends JPanel {
      */
     public TaskPanel(Task task) {
     setPreferredSize(new Dimension(200, 300));
-    setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(8,8,8,8),
+        new CompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(8, 8, 8, 8))));
     setLayout(new BorderLayout());
-    add(new JLabel(task.getName()), BorderLayout.NORTH);
+    
+    add(new JLabel(task.getName()), BorderLayout.NORTH); // placeholder
 }
 }

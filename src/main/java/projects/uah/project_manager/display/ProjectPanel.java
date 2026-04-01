@@ -69,7 +69,7 @@ public class ProjectPanel extends JPanel {
     }
     
     private void reloadTasks(Project project) {
-        
+        // removes all tasks to add from scratch
         taskListPanel.removeAll();
         for(Task task : project.getTasks()){
             taskListPanel.add(new TaskPanel(task));
