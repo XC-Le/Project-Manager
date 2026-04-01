@@ -15,13 +15,17 @@ import projects.uah.project_manager.manager.TaskManager;
  * @version 1.2
  */
 public class ProjectPanel extends JPanel {
-
+    
+    JPanel taskListPanel = new JPanel();
     
     /**
      * Constructs a new ProjectPanel and initializes its UI components.
      * @param project
      */
     public ProjectPanel(Project project) {
+        
+        reloadTasks(project);
+        
         setLayout(new BorderLayout());    
         setVisible(true);
         
@@ -34,18 +38,24 @@ public class ProjectPanel extends JPanel {
         rightBtns.add(addTaskBtn, BorderLayout.EAST);
         buttonPanel.add(rightBtns);
         
-        add(buttonPanel, BorderLayout.NORTH);
         
-        JPanel tasks = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        add(tasks, BorderLayout.WEST);
+        add(buttonPanel, BorderLayout.EAST);
         
+        // Creates the panel for the tasks
+        taskListPanel.setLayout(new BoxLayout(taskListPanel, BoxLayout.X_AXIS));
+        
+        // M
+        JScrollPane scrollPane = new JScrollPane(taskListPanel);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        
+        add(scrollPane, BorderLayout.WEST);
 
         // Listeners 
         
         // listener for add button
         addTaskBtn.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Task name:");
-            System.out.println("Task name entered: " + name);
             
             boolean exists = project.getTasks().stream().anyMatch(p -> p.getName().equalsIgnoreCase(name));
 
@@ -59,9 +69,13 @@ public class ProjectPanel extends JPanel {
     }
     
     private void reloadTasks(Project project) {
-        System.out.println("reloadTabs called, projects size: " + project.getTasks().size());
         
-        // removes all tabs to add from scratch
-   
+        taskListPanel.removeAll();
+        for(Task task : project.getTasks()){
+            taskListPanel.add(new TaskPanel(task));
+        }
+        taskListPanel.revalidate();
+        taskListPanel.repaint();
+        
     }
 }

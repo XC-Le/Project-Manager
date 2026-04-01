@@ -65,7 +65,6 @@ public class MainFrame extends JFrame {
         // listener for add button
         addProjectBtn.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Project name:");
-            System.out.println("Name entered: " + name);
             boolean exists = pm.getProjects().stream().anyMatch(p -> p.getName().equalsIgnoreCase(name));
             if(exists){
                 JOptionPane.showMessageDialog(this, "A project with that name already exists.");
@@ -176,7 +175,6 @@ public class MainFrame extends JFrame {
      * @param pm ProjectManager
      */
     private void reloadTabs(ProjectManager pm) {
-        System.out.println("reloadTabs called, projects size: " + pm.getProjects().size());
         projectTabs.removeAll();
         for (Project project : pm.getProjects()) {
             System.out.println("Adding tab: " + project.getName());
