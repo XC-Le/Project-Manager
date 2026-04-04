@@ -18,5 +18,15 @@ public class TaskPanel extends JPanel {
     setLayout(new BorderLayout());
     
     add(new JLabel(task.getName()), BorderLayout.NORTH); // placeholder
+    
+    // New button panel
+    JPanel buttonPanel = new JPanel(new BorderLayout());
+
+    // Remove task button added to the bottom right side of task panel
+    JPanel rightBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    JButton removeTaskBtn = new JButton("Delete");
+    rightBtns.add(removeTaskBtn, BorderLayout.EAST);
+    buttonPanel.add(rightBtns);
+    add(buttonPanel, BorderLayout.SOUTH);
 }
 }
