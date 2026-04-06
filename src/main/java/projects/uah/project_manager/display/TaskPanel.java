@@ -28,5 +28,12 @@ public class TaskPanel extends JPanel {
     rightBtns.add(removeTaskBtn, BorderLayout.EAST);
     buttonPanel.add(rightBtns);
     add(buttonPanel, BorderLayout.SOUTH);
+    
+    // listener for remove button
+    removeTaskBtn.addActionListener(e -> {
+        System.out.println("Removing Task: " + task.getName());
+        //project.removeTask(task);
+        //maybe https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html can help?
+    }); 
 }
 }

@@ -47,9 +47,9 @@ public class ProjectPanel extends JPanel {
         // M
         JScrollPane scrollPane = new JScrollPane(taskListPanel);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         
-        add(scrollPane, BorderLayout.WEST);
+        add(scrollPane, BorderLayout.CENTER);
 
         // Listeners 
         

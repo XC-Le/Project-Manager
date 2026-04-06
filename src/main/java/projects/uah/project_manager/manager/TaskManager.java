@@ -29,4 +29,14 @@ public class TaskManager {
     public void addTask(Task task){
         tasks.add(task);
     }
+    /**
+     * Removes a project from the list
+     * 
+     * @param index of project being removed
+     */
+    public void removeTask(int index){
+        //tasks.get(index).setActive(false);
+        //del_tasks.add(tasks.get(index));
+        tasks.remove(index);
+    }
 }
