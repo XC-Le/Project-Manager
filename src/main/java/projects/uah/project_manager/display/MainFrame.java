@@ -4,9 +4,8 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.time.LocalDate;
-import projects.uah.project_manager.model.Project;
-import projects.uah.project_manager.model.DraggableTabbedPane;
-import projects.uah.project_manager.manager.ProjectManager;
+import projects.uah.project_manager.model.*;
+import projects.uah.project_manager.manager.*;
 
 /**
  * Mainframe for the entire project
@@ -73,6 +72,7 @@ public class MainFrame extends JFrame {
                 pm.addProject(new Project(name, description, LocalDate.now(), true));
                 reloadTabs(pm);
                 projectTabs.setSelectedIndex(projectTabs.getTabCount() - 1);
+                DataManager.save(pm);
             }
         });
         
@@ -103,6 +103,7 @@ public class MainFrame extends JFrame {
                     int index = project_list.getSelectedIndex();
                     pm.removeProject(index);
                     projectTabs.removeTabAt(index);
+                    DataManager.save(pm); 
                 }
             }
         });
@@ -148,6 +149,7 @@ public class MainFrame extends JFrame {
             pm.addProject(restored);
             reloadTabs(pm);
             dialog.dispose();
+            DataManager.save(pm);
         });
 
         dialog.add(restoreBtn, BorderLayout.SOUTH);
