@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class ProjectManager {
 
-    private final java.util.List<Project> projects = new ArrayList<>();
-    private final java.util.List<Project> del_projects = new ArrayList<>();
+    private java.util.List<Project> projects = new ArrayList<>();
+    private java.util.List<Project> del_projects = new ArrayList<>();
     
     /**
      * Constructs a new ProjectManager with an empty project list.
@@ -64,6 +64,16 @@ public class ProjectManager {
         return projects;
     }
     
+    
+    /**
+     * Sets the list of projects
+     * 
+     * @param projects 
+     */
+    public void setProjects(List<Project> projects){
+        this.projects = projects;
+    }
+    
     /**
      * Returns the one project from the list of projects
      * 
@@ -81,5 +91,14 @@ public class ProjectManager {
      */
     public List<Project> getDeletedProjects(){
         return del_projects;
+    }
+    
+    /**
+     * Sets the list of deleted projects
+     * 
+     * @param projects 
+     */
+    public void setDeletedProjects(List<Project> del_projects){
+        this.del_projects = del_projects;
     }
 }

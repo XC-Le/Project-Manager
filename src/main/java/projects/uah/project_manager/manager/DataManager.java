@@ -1,0 +1,60 @@
+package projects.uah.project_manager.manager;
+
+import com.google.gson.*;
+import projects.uah.project_manager.model.Project;
+import java.io.*;
+import java.time.LocalDate;
+import java.util.List;
+
+/**
+ *
+ * @author super
+ */
+public class DataManager {
+    
+    private static final String SAVE_FILE = "projects.json";
+    
+    // Gson needs instructions on how to save and load LocalDate since it isn't primative
+    private static final Gson gson = new GsonBuilder()
+        .registerTypeAdapter(LocalDate.class,
+            (JsonSerializer<LocalDate>) (src, type, ctx) -> new JsonPrimitive(src.toString()))
+        .registerTypeAdapter(LocalDate.class,
+            (JsonDeserializer<LocalDate>) (json, type, ctx) -> LocalDate.parse(json.getAsString()))
+        .setPrettyPrinting().create();
+    
+    
+    public static void save(ProjectManager pm){
+        SaveData to_save = new SaveData(pm.getProjects(), pm.getDeletedProjects());
+        try(Writer writer = new FileWriter(SAVE_FILE)){
+            gson.toJson(to_save, writer);
+            System.out.println("Data saved to: " + new File(SAVE_FILE).getAbsolutePath());
+        } catch(IOException e){
+            System.err.println("Failed to save: " + e.getMessage());
+        }
+    }
+    
+    public static void load(ProjectManager pm){
+        File file = new File(SAVE_FILE);
+        if(!file.exists()){
+            System.out.println("No save file found.");
+        }
+        try(Reader reader = new FileReader(file )){
+               SaveData to_load = gson.fromJson(reader, SaveData.class);
+               pm.setProjects(to_load.projects);
+               pm.setDeletedProjects(to_load.del_projects);
+        } catch (IOException e) {
+            System.err.println("Failed to load: " + e.getMessage());
+        }
+    }
+    
+    
+    private static class SaveData{
+        List<Project> projects;
+        List<Project> del_projects;
+        
+        SaveData(List<Project> projects, List<Project> del_projects){
+            this.projects = projects;
+            this.del_projects = del_projects;
+        }
+    }
+}

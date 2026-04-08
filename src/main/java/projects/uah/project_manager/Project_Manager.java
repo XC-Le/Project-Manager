@@ -33,6 +33,7 @@ public class Project_Manager {
         
         SwingUtilities.invokeLater(() -> {
             ProjectManager pm = new ProjectManager();
+            DataManager.load(pm);
             new MainFrame(pm);
         });
     }
