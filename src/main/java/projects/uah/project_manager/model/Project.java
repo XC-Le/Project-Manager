@@ -19,6 +19,7 @@ public class Project {
     private LocalDate dueDate;
     private boolean isActive;
     private List<Task> tasks;
+    private LocalDate creationDate;
     
     /**
      * Constructs a new Project with the specified details.
@@ -34,6 +35,7 @@ public class Project {
         this.dueDate=dueDate;
         this.isActive=isActive;
         this.tasks = new ArrayList<>();
+        this.creationDate = LocalDate.now();
     }
 
     /**
@@ -89,7 +91,10 @@ public class Project {
     public void setDueDate(LocalDate dueDate) {
         this.dueDate=dueDate;
     }
-
+    
+    public LocalDate getCreationDate() {
+        return this.creationDate;
+    }
     /**
      * Returns whether the project is currently active.
      *

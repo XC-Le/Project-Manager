@@ -1,4 +1,21 @@
 {
   "projects": [],
-  "del_projects": []
+  "del_projects": [
+    {
+      "name": "test",
+      "description": "aaa",
+      "dueDate": "2026-04-13",
+      "isActive": false,
+      "tasks": [],
+      "creationDate": "2026-04-13"
+    },
+    {
+      "name": "aaa",
+      "description": "aaaa",
+      "dueDate": "2026-04-13",
+      "isActive": false,
+      "tasks": [],
+      "creationDate": "2026-04-13"
+    }
+  ]
 }

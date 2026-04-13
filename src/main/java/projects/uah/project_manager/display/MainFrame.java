@@ -36,7 +36,7 @@ public class MainFrame extends JFrame {
 
         // Top button bar
         JButton addProjectBtn = new JButton("New Project");
-        JButton delProjectBtn = new JButton("Delete");
+        JButton delProjectBtn = new JButton("Delete Project");
         JButton editPriorityBtn = new JButton("Edit Priority");
         JButton delProjectLst = new JButton("Check Deleted");
         
@@ -118,21 +118,21 @@ public class MainFrame extends JFrame {
             }
         });
 
-        // listener for check deleted button
-        // listener for check deleted button
+
         // listener for check deleted button
     delProjectLst.addActionListener(e -> {
         if(pm.getDeletedProjects().isEmpty()){
             JOptionPane.showMessageDialog(this, "No deleted projects.");
             return;
         }
-        String[] deletedNames = pm.getDeletedProjects().stream()
-            .map(Project::getName)
-            .toArray(String[]::new);
         JDialog dialog = new JDialog(this, "Deleted Projects", true);
         dialog.setSize(400, 300);
         dialog.setLocationRelativeTo(this);
         dialog.setLayout(new BorderLayout());
+
+        String[] deletedNames = pm.getDeletedProjects().stream()
+            .map(p -> p.getName() + "  |  Created: " + p.getCreationDate())
+            .toArray(String[]::new);
 
         JList<String> deletedList = new JList<>(deletedNames);
         dialog.add(new JScrollPane(deletedList), BorderLayout.CENTER);

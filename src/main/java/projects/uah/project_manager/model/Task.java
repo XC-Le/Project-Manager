@@ -16,6 +16,7 @@ public class Task {
     private LocalDate dueDate;
     private int priority;
     private boolean isComplete;
+    private LocalDate creationDate;
     /**
      * Constructs a new Task with the specified details.
      *
@@ -31,6 +32,7 @@ public class Task {
         this.dueDate = dueDate;
         this.priority = priority;
         this.isComplete = isComplete;
+        this.creationDate = LocalDate.now();
     }
 
     /**
@@ -121,5 +123,9 @@ public class Task {
      */
     public void setCompletion(boolean isComplete) {
         this.isComplete = isComplete;
+    }
+    
+    public LocalDate getCreationDate() {
+        return this.creationDate;
     }
 }
