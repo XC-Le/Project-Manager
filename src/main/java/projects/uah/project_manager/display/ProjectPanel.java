@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import javax.swing.*;
 import projects.uah.project_manager.model.Project;
 import projects.uah.project_manager.model.Task;
-import projects.uah.project_manager.manager.TaskManager;
+import projects.uah.project_manager.manager.*;
 
 /**
  * A Swing panel that displays and manages the list of projects.
@@ -22,7 +22,7 @@ public class ProjectPanel extends JPanel {
      * Constructs a new ProjectPanel and initializes its UI components.
      * @param project
      */
-    public ProjectPanel(Project project) {
+    public ProjectPanel(ProjectManager pm, Project project) {
         
         reloadTasks(project);
         
@@ -63,6 +63,7 @@ public class ProjectPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "A tasks with that name already exists in this project.");
             } else {
                 project.addTask(new Task(name, "", LocalDate.now(), 1, false));
+                DataManager.save(pm);
                 reloadTasks(project);
             }
         });   
