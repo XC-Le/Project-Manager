@@ -120,6 +120,7 @@ public class MainFrame extends JFrame {
 
         // listener for check deleted button
         // listener for check deleted button
+        // listener for check deleted button
     delProjectLst.addActionListener(e -> {
         if(pm.getDeletedProjects().isEmpty()){
             JOptionPane.showMessageDialog(this, "No deleted projects.");
@@ -152,7 +153,30 @@ public class MainFrame extends JFrame {
             DataManager.save(pm);
         });
 
-        dialog.add(restoreBtn, BorderLayout.SOUTH);
+        JButton permDeleteBtn = new JButton("Delete Permanently");
+        permDeleteBtn.addActionListener(pd -> {
+            int index = deletedList.getSelectedIndex();
+            if(index == -1){
+                JOptionPane.showMessageDialog(dialog, "Please select a project to delete.");
+                return;
+            }
+            int confirm = JOptionPane.showConfirmDialog(
+                dialog,
+                "Are you sure? This cannot be undone.",
+                "Confirm Permanent Delete",
+                JOptionPane.YES_NO_OPTION
+            );
+            if(confirm == JOptionPane.YES_OPTION){
+                pm.getDeletedProjects().remove(index);
+                dialog.dispose();
+                DataManager.save(pm);
+            }
+        });
+
+        JPanel bottomBtns = new JPanel(new FlowLayout());
+        bottomBtns.add(restoreBtn);
+        bottomBtns.add(permDeleteBtn);
+        dialog.add(bottomBtns, BorderLayout.SOUTH);
         dialog.setVisible(true);
     });
         
