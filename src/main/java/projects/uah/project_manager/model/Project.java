@@ -16,6 +16,7 @@ public class Project {
 
     private String name;
     private String description;
+    private LocalDate createdDate;
     private LocalDate dueDate;
     private boolean isActive;
     private List<Task> tasks;
@@ -72,6 +73,15 @@ public class Project {
         this.description=description;
     }
 
+    
+    
+    public LocalDate getCreatedDate(){
+        return this.createdDate;
+    }
+    
+    public void setCreatedDate(LocalDate createdDate){
+        this.createdDate = createdDate;
+    }
     /**
      * Returns the due date of the project.
      *
