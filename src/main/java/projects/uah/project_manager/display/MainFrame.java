@@ -4,6 +4,11 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.*;
+import java.time.ZoneId;
+import com.toedter.calendar.JDateChooser;
 import projects.uah.project_manager.model.*;
 import projects.uah.project_manager.manager.*;
 
@@ -69,7 +74,24 @@ public class MainFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "A project with that name already exists.");
             } else if (name != null && !name.isBlank()) {
                 String description = JOptionPane.showInputDialog(this, "Project description:");
-                pm.addProject(new Project(name, description, LocalDate.now(), true));
+                
+                LocalDate dueDate = null;
+                
+                JDateChooser dateChooser = new JDateChooser();
+                dateChooser.setMinSelectableDate(new Date()); // Prevent past dates
+
+                Object[] message = {
+                    "Select a due date:", dateChooser
+                };
+
+                int option = JOptionPane.showConfirmDialog(null, message, "Due Date", JOptionPane.OK_CANCEL_OPTION);
+
+                if (option == JOptionPane.OK_OPTION) {
+                    Date selectedDate = dateChooser.getDate();
+                    dueDate = LocalDate.ofInstant(selectedDate.toInstant(), ZoneId.systemDefault());
+                }
+                
+                pm.addProject(new Project(name, description, LocalDate.now(), dueDate, true));
                 reloadTabs(pm);
                 projectTabs.setSelectedIndex(projectTabs.getTabCount() - 1);
                 DataManager.save(pm);
@@ -180,7 +202,7 @@ public class MainFrame extends JFrame {
         projectTabs.removeAll();
         for (Project project : pm.getProjects()) {
             System.out.println("Adding tab: " + project.getName());
-            projectTabs.addTab(project.getName(), new ProjectPanel(project));
+            projectTabs.addTab(project.getName(), new ProjectPanel(pm, project));
         }
         projectTabs.revalidate();
         projectTabs.repaint();    
