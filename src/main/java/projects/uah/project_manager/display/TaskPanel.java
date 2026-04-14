@@ -17,14 +17,17 @@ public class TaskPanel extends JPanel {
         new CompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(8, 8, 8, 8))));
     setLayout(new BorderLayout());
     
-    add(new JLabel(task.getName()), BorderLayout.NORTH); // placeholder
-    
+    //Create time text added to the task panel
+    JPanel infoPanel = new JPanel(new BorderLayout());
+    infoPanel.add(new JLabel(task.getName()), BorderLayout.WEST);
+    infoPanel.add(new JLabel("Created: " + task.getCreationDate()), BorderLayout.EAST);
+    add(infoPanel, BorderLayout.NORTH);
     // New button panel
     JPanel buttonPanel = new JPanel(new BorderLayout());
 
     // Remove task button added to the bottom right side of task panel
     JPanel rightBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    JButton removeTaskBtn = new JButton("Delete");
+    JButton removeTaskBtn = new JButton("Delete Task");
     rightBtns.add(removeTaskBtn, BorderLayout.EAST);
     buttonPanel.add(rightBtns);
     add(buttonPanel, BorderLayout.SOUTH);
