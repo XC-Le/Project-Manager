@@ -16,11 +16,11 @@ public class Project {
 
     private String name;
     private String description;
-    private LocalDate createdDate;
+    private final LocalDate creationDate;
     private LocalDate dueDate;
     private boolean isActive;
     private List<Task> tasks;
-    private LocalDate creationDate;
+    
     
     /**
      * Constructs a new Project with the specified details.
@@ -30,14 +30,13 @@ public class Project {
      * @param dueDate     the due date of the project
      * @param isActive    true if the project is active, false if complete
      */
-    public Project(String name, String description, LocalDate createdDate, LocalDate dueDate, boolean isActive) {
+    public Project(String name, String description, LocalDate dueDate, boolean isActive) {
         this.name=name;
         this.description=description;
-        this.createdDate=createdDate;
+        this.creationDate=LocalDate.now();
         this.dueDate=dueDate;
         this.isActive=isActive;
         this.tasks = new ArrayList<>();
-        this.creationDate = LocalDate.now();
     }
 
     /**
@@ -77,12 +76,8 @@ public class Project {
     }
 
     
-    public LocalDate getCreatedDate(){
-        return this.createdDate;
-    }
-    
-    public void setCreatedDate(LocalDate createdDate){
-        this.createdDate = createdDate;
+    public LocalDate getCreationDate(){
+        return this.creationDate;
     }
     
     /**
@@ -103,9 +98,6 @@ public class Project {
         this.dueDate=dueDate;
     }
     
-    public LocalDate getCreationDate() {
-        return this.creationDate;
-    }
     /**
      * Returns whether the project is currently active.
      *
@@ -145,6 +137,7 @@ public class Project {
     public void addTask(Task task){
         this.tasks.add(task);
     }
+    
     public void removeTask(Task task){
         this.tasks.remove(task);
     }

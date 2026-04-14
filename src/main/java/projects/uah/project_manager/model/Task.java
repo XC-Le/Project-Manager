@@ -13,10 +13,10 @@ public class Task {
 
     private String name;
     private String description;
+    private final LocalDate creationDate;
     private LocalDate dueDate;
     private int priority;
     private boolean isComplete;
-    private LocalDate creationDate;
     /**
      * Constructs a new Task with the specified details.
      *
@@ -71,6 +71,10 @@ public class Task {
         this.description = description;
     }
 
+    public LocalDate getCreationDate() {
+        return this.creationDate;
+    }
+    
     /**
      * Returns the due date of the task.
      *
@@ -123,9 +127,5 @@ public class Task {
      */
     public void setCompletion(boolean isComplete) {
         this.isComplete = isComplete;
-    }
-    
-    public LocalDate getCreationDate() {
-        return this.creationDate;
     }
 }

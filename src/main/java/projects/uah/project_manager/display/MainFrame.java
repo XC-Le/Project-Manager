@@ -91,7 +91,7 @@ public class MainFrame extends JFrame {
                     dueDate = LocalDate.ofInstant(selectedDate.toInstant(), ZoneId.systemDefault());
                 }
                 
-                pm.addProject(new Project(name, description, LocalDate.now(), dueDate, true));
+                pm.addProject(new Project(name, description, dueDate, true));
                 reloadTabs(pm);
                 projectTabs.setSelectedIndex(projectTabs.getTabCount() - 1);
                 DataManager.save(pm);
