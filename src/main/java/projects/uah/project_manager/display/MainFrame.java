@@ -35,8 +35,6 @@ public class MainFrame extends JFrame {
         setMinimumSize(new Dimension(600, 400));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());        
-        setVisible(true);
         setLayout(new BorderLayout());
 
         // Top button bar
@@ -215,6 +213,9 @@ public class MainFrame extends JFrame {
 
         // Load initial data 
         reloadTabs(pm);
+        
+        // set as visible
+        setVisible(true);
     }
 
     /**

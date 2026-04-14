@@ -23,18 +23,15 @@ public class Project_Manager {
      * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
-        
-        
-        UIManager.put("Component.accentColor", new Color(0x2D7DD2));
-        UIManager.put("Button.arc", 10);
-        UIManager.put("defaultFont", new Font("Segoe UI", Font.PLAIN, 14));
-        FlatLightLaf.setup(); // or FlatDarkLaf.setup()
-
-        
         SwingUtilities.invokeLater(() -> {
+            FlatLightLaf.setup();
+            UIManager.put("Component.accentColor", new Color(0x2D7DD2));
+            UIManager.put("Button.arc", 10);
+            UIManager.put("defaultFont", new Font("Segoe UI", Font.PLAIN, 14));
+        
             ProjectManager pm = new ProjectManager();
             DataManager.load(pm);
-            new MainFrame(pm);
+            MainFrame frame = new MainFrame(pm);
         });
     }
 }
