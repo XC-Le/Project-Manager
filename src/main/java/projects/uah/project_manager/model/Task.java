@@ -1,6 +1,8 @@
 package projects.uah.project_manager.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a task within a project in the Project Manager application.
@@ -17,6 +19,7 @@ public class Task {
     private LocalDate dueDate;
     private int priority;
     private boolean isComplete;
+    private List<Subtask> subtasks;
     /**
      * Constructs a new Task with the specified details.
      *
@@ -29,10 +32,11 @@ public class Task {
     public Task(String name, String description, LocalDate dueDate, int priority, boolean isComplete) {
         this.name = name;
         this.description = description;
+        this.creationDate = LocalDate.now();
         this.dueDate = dueDate;
         this.priority = priority;
         this.isComplete = isComplete;
-        this.creationDate = LocalDate.now();
+        this.subtasks = new ArrayList<>();
     }
 
     /**
@@ -127,5 +131,13 @@ public class Task {
      */
     public void setCompletion(boolean isComplete) {
         this.isComplete = isComplete;
+    }
+    
+    public void addSubtask(Subtask subtask){
+        this.subtasks.add(subtask);
+    }
+    
+    public void removeSubtask(Subtask subtask){
+        this.subtasks.remove(subtask);
     }
 }
