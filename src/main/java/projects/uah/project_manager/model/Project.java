@@ -29,9 +29,10 @@ public class Project {
      * @param dueDate     the due date of the project
      * @param isActive    true if the project is active, false if complete
      */
-    public Project(String name, String description, LocalDate dueDate, boolean isActive) {
+    public Project(String name, String description, LocalDate createdDate, LocalDate dueDate, boolean isActive) {
         this.name=name;
         this.description=description;
+        this.createdDate=createdDate;
         this.dueDate=dueDate;
         this.isActive=isActive;
         this.tasks = new ArrayList<>();
@@ -74,7 +75,6 @@ public class Project {
     }
 
     
-    
     public LocalDate getCreatedDate(){
         return this.createdDate;
     }
@@ -82,6 +82,7 @@ public class Project {
     public void setCreatedDate(LocalDate createdDate){
         this.createdDate = createdDate;
     }
+    
     /**
      * Returns the due date of the project.
      *
