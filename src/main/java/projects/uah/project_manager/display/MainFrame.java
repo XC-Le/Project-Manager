@@ -227,7 +227,6 @@ public class MainFrame extends JFrame {
     private void reloadTabs(ProjectManager pm) {
         projectTabs.removeAll();
         for (Project project : pm.getProjects()) {
-            System.out.println("Adding tab: " + project.getName());
             projectTabs.addTab(project.getName(), new ProjectPanel(pm, project));
         }
         projectTabs.revalidate();
