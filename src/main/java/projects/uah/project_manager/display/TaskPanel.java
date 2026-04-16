@@ -26,14 +26,18 @@ public class TaskPanel extends JPanel {
         infoPanel.add(new JLabel(task.getName()), BorderLayout.WEST);
         infoPanel.add(new JLabel("Created: " + task.getCreationDate()), BorderLayout.EAST);
         add(infoPanel, BorderLayout.NORTH);
+        
         // New button panel
-        JPanel buttonPanel = new JPanel(new BorderLayout());
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-        // Remove task button added to the bottom right side of task panel
-        JPanel rightBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton removeTaskBtn = new JButton("Delete Task");
-        rightBtns.add(removeTaskBtn, BorderLayout.EAST);
-        buttonPanel.add(rightBtns);
+        // Add subtask button
+        JButton addSubtaskBtn = new JButton("Add Subtask");
+        buttonPanel.add(addSubtaskBtn);
+        
+        // Remove subtask button added to the bottom right side of task panel
+        JButton removeSubtaskBtn = new JButton("Delete Subtask");
+        buttonPanel.add(removeSubtaskBtn);
+        
         add(buttonPanel, BorderLayout.SOUTH);
         
     }
