@@ -32,11 +32,9 @@ public class MainFrame extends JFrame {
         // Window settings
         setTitle("Project Manager");
         setSize(900, 600);
-        setMinimumSize(new Dimension(600, 400));
+        setMinimumSize(new Dimension(900, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());        
-        setVisible(true);
         setLayout(new BorderLayout());
 
         // Top button bar
@@ -142,65 +140,66 @@ public class MainFrame extends JFrame {
 
 
         // listener for check deleted button
-    delProjectLst.addActionListener(e -> {
-        if(pm.getDeletedProjects().isEmpty()){
-            JOptionPane.showMessageDialog(this, "No deleted projects.");
-            return;
-        }
-        JDialog dialog = new JDialog(this, "Deleted Projects", true);
-        dialog.setSize(400, 300);
-        dialog.setLocationRelativeTo(this);
-        dialog.setLayout(new BorderLayout());
-
-        String[] deletedNames = pm.getDeletedProjects().stream()
-            .map(p -> p.getName() + "  |  Created: " + p.getCreationDate())
-            .toArray(String[]::new);
-
-        JList<String> deletedList = new JList<>(deletedNames);
-        dialog.add(new JScrollPane(deletedList), BorderLayout.CENTER);
-
-        JButton restoreBtn = new JButton("Restore");
-        restoreBtn.addActionListener(re -> {
-            int index = deletedList.getSelectedIndex();
-            if(index == -1){
-                JOptionPane.showMessageDialog(dialog, "Please select a project to restore.");
+        delProjectLst.addActionListener(e -> {
+            if(pm.getDeletedProjects().isEmpty()){
+                JOptionPane.showMessageDialog(this, "No deleted projects.");
                 return;
             }
-            Project restored = pm.getDeletedProjects().get(index);
-            pm.getDeletedProjects().remove(index);
-            restored.setActive(true);
-            pm.addProject(restored);
-            reloadTabs(pm);
-            dialog.dispose();
-            DataManager.save(pm);
-        });
+            
+            JDialog dialog = new JDialog(this, "Deleted Projects", true);
+            dialog.setSize(400, 300);
+            dialog.setLocationRelativeTo(this);
+            dialog.setLayout(new BorderLayout());
 
-        JButton permDeleteBtn = new JButton("Delete Permanently");
-        permDeleteBtn.addActionListener(pd -> {
-            int index = deletedList.getSelectedIndex();
-            if(index == -1){
-                JOptionPane.showMessageDialog(dialog, "Please select a project to delete.");
-                return;
-            }
-            int confirm = JOptionPane.showConfirmDialog(
-                dialog,
-                "Are you sure? This cannot be undone.",
-                "Confirm Permanent Delete",
-                JOptionPane.YES_NO_OPTION
-            );
-            if(confirm == JOptionPane.YES_OPTION){
+            String[] deletedNames = pm.getDeletedProjects().stream()
+                .map(p -> p.getName() + "  |  Created: " + p.getCreationDate())
+                .toArray(String[]::new);
+
+            JList<String> deletedList = new JList<>(deletedNames);
+            dialog.add(new JScrollPane(deletedList), BorderLayout.CENTER);
+
+            JButton restoreBtn = new JButton("Restore");
+            restoreBtn.addActionListener(re -> {
+                int index = deletedList.getSelectedIndex();
+                if(index == -1){
+                    JOptionPane.showMessageDialog(dialog, "Please select a project to restore.");
+                    return;
+                }
+                Project restored = pm.getDeletedProjects().get(index);
                 pm.getDeletedProjects().remove(index);
+                restored.setActive(true);
+                pm.addProject(restored);
+                reloadTabs(pm);
                 dialog.dispose();
                 DataManager.save(pm);
-            }
-        });
+            });
 
-        JPanel bottomBtns = new JPanel(new FlowLayout());
-        bottomBtns.add(restoreBtn);
-        bottomBtns.add(permDeleteBtn);
-        dialog.add(bottomBtns, BorderLayout.SOUTH);
-        dialog.setVisible(true);
-    });
+            JButton permDeleteBtn = new JButton("Delete Permanently");
+            permDeleteBtn.addActionListener(pd -> {
+                int index = deletedList.getSelectedIndex();
+                if(index == -1){
+                    JOptionPane.showMessageDialog(dialog, "Please select a project to delete.");
+                    return;
+                }
+                int confirm = JOptionPane.showConfirmDialog(
+                    dialog,
+                    "Are you sure? This cannot be undone.",
+                    "Confirm Permanent Delete",
+                    JOptionPane.YES_NO_OPTION
+                );
+                if(confirm == JOptionPane.YES_OPTION){
+                    pm.getDeletedProjects().remove(index);
+                    dialog.dispose();
+                    DataManager.save(pm);
+                }
+            });
+
+            JPanel bottomBtns = new JPanel(new FlowLayout());
+            bottomBtns.add(restoreBtn);
+            bottomBtns.add(permDeleteBtn);
+            dialog.add(bottomBtns, BorderLayout.SOUTH);
+            dialog.setVisible(true);
+        });
         
         // Border modifications 
         topBar.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1)); 
@@ -215,6 +214,9 @@ public class MainFrame extends JFrame {
 
         // Load initial data 
         reloadTabs(pm);
+        
+        // set as visible
+        setVisible(true);
     }
 
     /**

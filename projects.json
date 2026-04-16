@@ -1,84 +1,32 @@
 {
-<<<<<<< HEAD
   "projects": [
     {
-      "name": "does this work?",
-      "description": "",
-      "dueDate": "2026-04-08",
+      "name": "Project 1",
+      "description": "created a project",
+      "creationDate": "2026-04-14",
+      "dueDate": "2026-04-16",
       "isActive": true,
       "tasks": [
         {
-          "name": "help",
+          "name": "Help 3",
           "description": "",
-          "dueDate": "2026-04-13",
+          "creationDate": "2026-04-15",
+          "dueDate": "2026-04-15",
           "priority": 1,
-          "isComplete": false
+          "isComplete": false,
+          "subtasks": []
         },
         {
-          "name": "no way",
+          "name": "Help 1",
           "description": "",
-          "dueDate": "2026-04-13",
+          "creationDate": "2026-04-15",
+          "dueDate": "2026-04-15",
           "priority": 1,
-          "isComplete": false
+          "isComplete": false,
+          "subtasks": []
         }
       ]
-    },
-    {
-      "name": "Project 1",
-      "description": "Wow",
-      "createdDate": "2026-04-13",
-      "dueDate": "2026-05-27",
-      "isActive": true,
-      "tasks": []
     }
   ],
-  "del_projects": [
-    {
-      "name": "wow",
-      "description": "",
-      "dueDate": "2026-04-08",
-      "isActive": false,
-      "tasks": []
-    },
-    {
-      "name": "I wonter",
-      "description": "",
-      "dueDate": "2026-04-08",
-      "isActive": false,
-      "tasks": []
-    },
-    {
-      "name": "asdflkj;",
-      "description": "",
-      "dueDate": "2026-04-08",
-      "isActive": false,
-      "tasks": []
-    },
-    {
-      "name": "Project 1",
-      "description": "",
-      "dueDate": "2026-04-13",
-      "isActive": false,
-      "tasks": []
-=======
-  "projects": [],
-  "del_projects": [
-    {
-      "name": "test",
-      "description": "aaa",
-      "dueDate": "2026-04-13",
-      "isActive": false,
-      "tasks": [],
-      "creationDate": "2026-04-13"
-    },
-    {
-      "name": "aaa",
-      "description": "aaaa",
-      "dueDate": "2026-04-13",
-      "isActive": false,
-      "tasks": [],
-      "creationDate": "2026-04-13"
->>>>>>> b67e68a04a2461dadedecfb3028bcc6ed60b7673
-    }
-  ]
+  "del_projects": []
 }

@@ -138,8 +138,8 @@ public class Project {
         this.tasks.add(task);
     }
     
-    public void removeTask(Task task){
-        this.tasks.remove(task);
+    public void removeTask(int index){
+        this.tasks.remove(index);
     }
 
 }
