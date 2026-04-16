@@ -1,12 +1,12 @@
 package projects.uah.project_manager.display;
-
+ 
 import java.awt.*;
 import java.time.LocalDate;
 import javax.swing.*;
 import projects.uah.project_manager.model.Project;
 import projects.uah.project_manager.model.Task;
 import projects.uah.project_manager.manager.*;
-
+ 
 /**
  * A Swing panel that displays and manages the list of projects.
  * Allows users to view, create, and interact with projects through the graphical interface.
@@ -24,26 +24,26 @@ public class ProjectPanel extends JPanel {
      */
     public ProjectPanel(ProjectManager pm, Project project) {
         
-        reloadTasks(pm, project);
-        
         setLayout(new BorderLayout());    
         setVisible(true);
         
         // New button panel
-        JPanel buttonPanel = new JPanel(new BorderLayout());
-        
-        // New button panel on right side of project panel
-        JPanel rightBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+ 
         // add task button
         JButton addTaskBtn = new JButton("New Task");
-        rightBtns.add(addTaskBtn, BorderLayout.EAST);
-        
+        addTaskBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonPanel.add(addTaskBtn);
+ 
+        buttonPanel.add(Box.createVerticalStrut(5));
+ 
         // delete task button
         JButton delTaskBtn = new JButton("Delete Task");
-        rightBtns.add(delTaskBtn, BorderLayout.SOUTH);
-        
-        buttonPanel.add(rightBtns);
+        delTaskBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonPanel.add(delTaskBtn);
+ 
         add(buttonPanel, BorderLayout.EAST);
         
         // Creates the panel for the tasks
@@ -55,7 +55,7 @@ public class ProjectPanel extends JPanel {
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         
         add(scrollPane, BorderLayout.CENTER);
-
+ 
         // Listeners 
         
         // listener for add button
@@ -63,7 +63,7 @@ public class ProjectPanel extends JPanel {
             String name = JOptionPane.showInputDialog(this, "Task name:");
             
             boolean exists = project.getTasks().stream().anyMatch(p -> p.getName().equalsIgnoreCase(name));
-
+ 
             if(exists){
                 JOptionPane.showMessageDialog(this, "A tasks with that name already exists in this project.");
             } else if(name != null && !name.isBlank()) {

@@ -2,13 +2,13 @@
   "projects": [
     {
       "name": "Project 1",
-      "description": "created a project",
-      "creationDate": "2026-04-14",
+      "description": "",
+      "creationDate": "2026-04-15",
       "dueDate": "2026-04-16",
       "isActive": true,
       "tasks": [
         {
-          "name": "Help 3",
+          "name": "Task 1",
           "description": "",
           "creationDate": "2026-04-15",
           "dueDate": "2026-04-15",
@@ -17,7 +17,34 @@
           "subtasks": []
         },
         {
-          "name": "Help 1",
+          "name": "Task 2",
+          "description": "",
+          "creationDate": "2026-04-15",
+          "dueDate": "2026-04-15",
+          "priority": 1,
+          "isComplete": false,
+          "subtasks": []
+        }
+      ]
+    },
+    {
+      "name": "Project 2",
+      "description": "",
+      "creationDate": "2026-04-15",
+      "dueDate": "2026-04-30",
+      "isActive": true,
+      "tasks": [
+        {
+          "name": "Task 1",
+          "description": "",
+          "creationDate": "2026-04-15",
+          "dueDate": "2026-04-15",
+          "priority": 1,
+          "isComplete": false,
+          "subtasks": []
+        },
+        {
+          "name": "Task 3",
           "description": "",
           "creationDate": "2026-04-15",
           "dueDate": "2026-04-15",
@@ -28,5 +55,32 @@
       ]
     }
   ],
-  "del_projects": []
+  "del_projects": [
+    {
+      "name": "wowo",
+      "description": "",
+      "creationDate": "2026-04-15",
+      "dueDate": "2026-04-22",
+      "isActive": false,
+      "tasks": []
+    },
+    {
+      "name": "does it work",
+      "description": "",
+      "creationDate": "2026-04-15",
+      "dueDate": "2026-04-15",
+      "isActive": false,
+      "tasks": [
+        {
+          "name": "Yes",
+          "description": "",
+          "creationDate": "2026-04-15",
+          "dueDate": "2026-04-15",
+          "priority": 1,
+          "isComplete": false,
+          "subtasks": []
+        }
+      ]
+    }
+  ]
 }
