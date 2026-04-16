@@ -35,8 +35,6 @@ public class TaskPanel extends JPanel {
         rightBtns.add(removeTaskBtn, BorderLayout.EAST);
         buttonPanel.add(rightBtns);
         add(buttonPanel, BorderLayout.SOUTH);
-
-        // listener for remove button
         
     }
 }
