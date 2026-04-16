@@ -133,11 +133,15 @@ public class Task {
         this.isComplete = isComplete;
     }
     
+    public List<Subtask> getSubtasks(){
+        return this.subtasks;
+    }
+    
     public void addSubtask(Subtask subtask){
         this.subtasks.add(subtask);
     }
     
-    public void removeSubtask(Subtask subtask){
-        this.subtasks.remove(subtask);
+    public void removeSubtask(int index){
+        this.subtasks.remove(index);
     }
 }
