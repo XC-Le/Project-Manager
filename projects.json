@@ -8,28 +8,19 @@
       "isActive": true,
       "tasks": [
         {
-          "name": "Do homework ",
+          "name": "Help 3",
           "description": "",
-          "creationDate": "2026-04-14",
-          "dueDate": "2026-04-14",
+          "creationDate": "2026-04-15",
+          "dueDate": "2026-04-15",
           "priority": 1,
           "isComplete": false,
           "subtasks": []
         },
         {
-          "name": "Do second homework",
+          "name": "Help 1",
           "description": "",
-          "creationDate": "2026-04-14",
-          "dueDate": "2026-04-14",
-          "priority": 1,
-          "isComplete": false,
-          "subtasks": []
-        },
-        {
-          "name": "Make Homework for others",
-          "description": "",
-          "creationDate": "2026-04-14",
-          "dueDate": "2026-04-14",
+          "creationDate": "2026-04-15",
+          "dueDate": "2026-04-15",
           "priority": 1,
           "isComplete": false,
           "subtasks": []

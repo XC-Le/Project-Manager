@@ -66,7 +66,7 @@ public class ProjectPanel extends JPanel {
 
             if(exists){
                 JOptionPane.showMessageDialog(this, "A tasks with that name already exists in this project.");
-            } else {
+            } else if(name != null && !name.isBlank()) {
                 project.addTask(new Task(name, "", LocalDate.now(), 1, false));
                 DataManager.save(pm);
                 reloadTasks(pm, project);
@@ -97,9 +97,9 @@ public class ProjectPanel extends JPanel {
                     JOptionPane.YES_NO_OPTION
                 );
                 if(double_check == JOptionPane.YES_OPTION){
-                    int index = task_list.getSelectedIndex();
-                    // project.removeTask();
-
+                    int  index = task_list.getSelectedIndex();
+                    project.removeTask(index);
+                    reloadTasks(pm, project);
                     DataManager.save(pm); 
                 }
             }
