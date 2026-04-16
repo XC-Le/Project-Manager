@@ -65,7 +65,7 @@ public class ProjectPanel extends JPanel {
             boolean exists = project.getTasks().stream().anyMatch(p -> p.getName().equalsIgnoreCase(name));
  
             if(exists){
-                JOptionPane.showMessageDialog(this, "A tasks with that name already exists in this project.");
+                JOptionPane.showMessageDialog(this, "A task with that name already exists in this project.");
             } else if(name != null && !name.isBlank()) {
                 project.addTask(new Task(name, "", LocalDate.now(), 1, false));
                 DataManager.save(pm);
@@ -83,13 +83,13 @@ public class ProjectPanel extends JPanel {
             JList<String> task_list = new JList<>(task_names);
             task_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             task_list.setSelectedIndex(0);
-            int select_project = JOptionPane.showConfirmDialog(
+            int select_task = JOptionPane.showConfirmDialog(
                 this,
                 new JScrollPane(task_list),
                 "Select Project to Delete",
                 JOptionPane.OK_CANCEL_OPTION
             );
-            if(select_project == JOptionPane.OK_OPTION){
+            if(select_task == JOptionPane.OK_OPTION){
                 int double_check = JOptionPane.showConfirmDialog(
                     this,
                     "Are you sure?",
@@ -116,6 +116,5 @@ public class ProjectPanel extends JPanel {
         }
         taskListPanel.revalidate();
         taskListPanel.repaint();
-        
     }
 }

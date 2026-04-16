@@ -2,13 +2,15 @@ package projects.uah.project_manager.display;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 import javax.swing.border.CompoundBorder;
-import projects.uah.project_manager.manager.ProjectManager;
-import projects.uah.project_manager.model.Project;
-import projects.uah.project_manager.model.Task;
+import projects.uah.project_manager.manager.*;
+import projects.uah.project_manager.model.*;
 
 public class TaskPanel extends JPanel {
 
+    JPanel subtaskListPanel = new JPanel();
+    
     /**
      * Constructs a new TaskPanel and initializes its UI components.
      * @param pm      project manager to save data
@@ -21,24 +23,91 @@ public class TaskPanel extends JPanel {
             new CompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(8, 8, 8, 8))));
         setLayout(new BorderLayout());
 
-        //Create time text added to the task panel
+        // Header: task name and creation date
         JPanel infoPanel = new JPanel(new BorderLayout());
         infoPanel.add(new JLabel(task.getName()), BorderLayout.WEST);
         infoPanel.add(new JLabel("Created: " + task.getCreationDate()), BorderLayout.EAST);
         add(infoPanel, BorderLayout.NORTH);
         
         // New button panel
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-
-        // Add subtask button
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 0, 4));
         JButton addSubtaskBtn = new JButton("Add Subtask");
         buttonPanel.add(addSubtaskBtn);
-        
-        // Remove subtask button added to the bottom right side of task panel
-        JButton removeSubtaskBtn = new JButton("Delete Subtask");
-        buttonPanel.add(removeSubtaskBtn);
+        JButton delSubtaskBtn = new JButton("Delete Subtask");
+        buttonPanel.add(delSubtaskBtn);
         
         add(buttonPanel, BorderLayout.SOUTH);
         
+        // Subtask list
+        subtaskListPanel.setLayout(new BoxLayout(subtaskListPanel, BoxLayout.Y_AXIS));
+        JScrollPane scrollPane = new JScrollPane(subtaskListPanel);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBorder(null);
+        add(scrollPane, BorderLayout.CENTER);
+        
+        // listener for add button
+        addSubtaskBtn.addActionListener(e -> {
+            String name = JOptionPane.showInputDialog(this, "Subtask name:");
+            
+            boolean exists = project.getTasks().stream().anyMatch(p -> p.getName().equalsIgnoreCase(name));
+ 
+            if(exists){
+                JOptionPane.showMessageDialog(this, "A subtask with that name already exists in this project.");
+            } else if(name != null && !name.isBlank()) {
+                task.addSubtask(new Subtask(name, LocalDate.now(), false));
+                DataManager.save(pm);
+                reloadSubtasks(pm, task);
+            }
+        });  
+        
+        // listener for delete button
+        delSubtaskBtn.addActionListener(e -> {
+            String[] subtask_names = task.getSubtasks().stream().map(Subtask::getName).toArray(String[]::new);
+            if(task.getSubtasks().isEmpty()){
+                JOptionPane.showMessageDialog(this, "No tasks to delete.");
+                return;
+            }
+            JList<String> subtask_list = new JList<>(subtask_names);
+            subtask_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            subtask_list.setSelectedIndex(0);
+            int select_project = JOptionPane.showConfirmDialog(
+                this,
+                new JScrollPane(subtask_list),
+                "Select Project to Delete",
+                JOptionPane.OK_CANCEL_OPTION
+            );
+            if(select_project == JOptionPane.OK_OPTION){
+                int double_check = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure?",
+                    "Confirm",
+                    JOptionPane.YES_NO_OPTION
+                );
+                if(double_check == JOptionPane.YES_OPTION){
+                    int  index = subtask_list.getSelectedIndex();
+                    task.removeSubtask(index);
+                    reloadSubtasks(pm, task);
+                    DataManager.save(pm); 
+                }
+            }
+        });
+        
+        reloadSubtasks(pm, task);
+        
+    }
+    
+    private void reloadSubtasks(ProjectManager pm, Task task) {
+        subtaskListPanel.removeAll();
+        for (Subtask subtask : task.getSubtasks()) {
+            JCheckBox checkBox = new JCheckBox(subtask.getName(), subtask.getCompletion());
+            checkBox.addActionListener(e -> {
+                subtask.setCompletion(checkBox.isSelected());
+                DataManager.save(pm);
+            });
+            subtaskListPanel.add(checkBox);
+        }
+        subtaskListPanel.revalidate();
+        subtaskListPanel.repaint();
     }
 }
