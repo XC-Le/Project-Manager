@@ -34,7 +34,7 @@
           "description": "",
           "creationDate": "2026-04-16",
           "dueDate": "2026-04-16",
-          "priority": 1,
+          "priority": 2,
           "isComplete": false,
           "subtasks": [
             {
@@ -50,6 +50,18 @@
               "isComplete": true
             }
           ]
+        }
+      ],
+      "deletedTasks": [
+        {
+          "name": "woah",
+          "description": "",
+          "creationDate": "2026-04-18",
+          "dueDate": "2026-04-18",
+          "priority": 3,
+          "isComplete": false,
+          "subtasks": [],
+          "deletedSubtasks": []
         }
       ]
     },
@@ -99,8 +111,8 @@
           "description": "",
           "creationDate": "2026-04-15",
           "dueDate": "2026-04-15",
-          "priority": 1,
-          "isComplete": false,
+          "priority": 2,
+          "isComplete": true,
           "subtasks": [
             {
               "name": "Hug a plush",
@@ -129,17 +141,127 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Play a Kirby Game",
+      "description": "Play this Kirby Game",
+      "creationDate": "2026-04-18",
+      "dueDate": "2026-04-23",
+      "isActive": true,
+      "tasks": [
+        {
+          "name": "Pick up a Game",
+          "description": "",
+          "creationDate": "2026-04-18",
+          "dueDate": "2026-04-18",
+          "priority": 1,
+          "isComplete": true,
+          "subtasks": [
+            {
+              "name": "Find your car keys",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Find your wallet",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Grab your phone",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Go outside your house",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Go to your car",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Unlock the car",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Get in the car",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Start the car",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Let the AC hit you",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Put the car in reverse",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Pull out",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Put the car in drive",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Drive forward",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "Go to the place where the game is",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "get the game",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            }
+          ]
+        },
+        {
+          "name": "Put in the Game",
+          "description": "",
+          "creationDate": "2026-04-18",
+          "dueDate": "2026-04-18",
+          "priority": 2,
+          "isComplete": false,
+          "subtasks": []
+        }
+      ]
     }
   ],
   "del_projects": [
-    {
-      "name": "wowo",
-      "description": "",
-      "creationDate": "2026-04-15",
-      "dueDate": "2026-04-22",
-      "isActive": false,
-      "tasks": []
-    },
     {
       "name": "Project 2",
       "description": "",

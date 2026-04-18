@@ -20,6 +20,7 @@ public class Project {
     private LocalDate dueDate;
     private boolean isActive;
     private List<Task> tasks;
+    private List<Task> deletedTasks = new ArrayList<>();
     
     
     /**
@@ -37,6 +38,7 @@ public class Project {
         this.dueDate=dueDate;
         this.isActive=isActive;
         this.tasks = new ArrayList<>();
+        
     }
 
     /**
@@ -124,7 +126,17 @@ public class Project {
     public List<Task> getTasks() {
         return this.tasks;
     }
-
+    
+    /**
+     * Returns the deleted tasks for the project.
+     *
+     * @return the list of deleted tasks
+     */
+    public List<Task> getDeletedTasks() {
+        if(deletedTasks == null) deletedTasks = new ArrayList<>();
+        return this.deletedTasks;
+    }
+    
     /**
      * Sets the tasks for the project.
      *
@@ -138,8 +150,10 @@ public class Project {
         this.tasks.add(task);
     }
     
-    public void removeTask(int index){
-        this.tasks.remove(index);
-    }
-
+    public void removeTask(int index) {
+        if(deletedTasks == null) deletedTasks = new ArrayList<>();
+        deletedTasks.add(tasks.get(index));
+        tasks.remove(index);
+}
+    
 }

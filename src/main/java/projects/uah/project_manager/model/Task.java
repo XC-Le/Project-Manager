@@ -20,6 +20,7 @@ public class Task {
     private int priority;
     private boolean isComplete;
     private List<Subtask> subtasks;
+    private List<Subtask> deletedSubtasks = new ArrayList<>();
     /**
      * Constructs a new Task with the specified details.
      *
@@ -37,6 +38,7 @@ public class Task {
         this.priority = priority;
         this.isComplete = isComplete;
         this.subtasks = new ArrayList<>();
+        
     }
 
     /**
@@ -136,12 +138,18 @@ public class Task {
     public List<Subtask> getSubtasks(){
         return this.subtasks;
     }
+    public List<Subtask> getDeletedSubtasks() {
+        if(deletedSubtasks == null) deletedSubtasks = new ArrayList<>();
+        return this.deletedSubtasks;
+    }
     
     public void addSubtask(Subtask subtask){
         this.subtasks.add(subtask);
     }
     
-    public void removeSubtask(int index){
-        this.subtasks.remove(index);
-    }
+    public void removeSubtask(int index) {
+        if(deletedSubtasks == null) deletedSubtasks = new ArrayList<>();
+        deletedSubtasks.add(subtasks.get(index));
+        subtasks.remove(index);
+}
 }

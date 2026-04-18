@@ -41,7 +41,7 @@ public class MainFrame extends JFrame {
         JButton addProjectBtn = new JButton("New Project");
         JButton delProjectBtn = new JButton("Delete Project");
         JButton editPriorityBtn = new JButton("Edit Priority");
-        JButton delProjectLst = new JButton("Check Deleted");
+        JButton delProjectLst = new JButton("Deleted Projects");
         
         JPanel topBar = new JPanel(new BorderLayout());
 

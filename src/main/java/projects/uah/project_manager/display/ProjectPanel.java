@@ -43,7 +43,14 @@ public class ProjectPanel extends JPanel {
         JButton delTaskBtn = new JButton("Delete Task");
         delTaskBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonPanel.add(delTaskBtn);
- 
+        
+        buttonPanel.add(Box.createVerticalStrut(5));
+        
+        // project details button
+        JButton detailsBtn = new JButton("Details");
+        detailsBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonPanel.add(detailsBtn);
+        
         add(buttonPanel, BorderLayout.EAST);
         
         // Creates the panel for the tasks
@@ -68,6 +75,7 @@ public class ProjectPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "A task with that name already exists in this project.");
             } else if(name != null && !name.isBlank()) {
                 project.addTask(new Task(name, "", LocalDate.now(), 1, false));
+                updatePriorities(project);
                 DataManager.save(pm);
                 reloadTasks(pm, project);
             }
@@ -104,17 +112,118 @@ public class ProjectPanel extends JPanel {
                 }
             }
         });
+        // listener for details button
+        detailsBtn.addActionListener(e -> {
+            JDialog dialog = new JDialog();
+            dialog.setTitle("Project Details - " + project.getName());
+            dialog.setSize(400, 400);
+            dialog.setLocationRelativeTo(this);
+            dialog.setLayout(new BorderLayout());
+
+            JPanel detailsPanel = new JPanel();
+            detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
+            detailsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            JLabel descLabel = new JLabel("Description: " + project.getDescription());
+            descLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            detailsPanel.add(descLabel);
+            detailsPanel.add(Box.createVerticalStrut(5));
+
+            JLabel createdLabel = new JLabel("Created: " + (project.getCreationDate() != null ? project.getCreationDate() : "Unknown"));
+            createdLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            detailsPanel.add(createdLabel);
+            detailsPanel.add(Box.createVerticalStrut(5));
+
+            JLabel dueDateLabel = new JLabel("Due Date: " + (project.getDueDate() != null ? project.getDueDate() : "Not set"));
+            dueDateLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            detailsPanel.add(dueDateLabel);
+            detailsPanel.add(Box.createVerticalStrut(5));
+
+            JLabel taskCountLabel = new JLabel("Tasks: " + project.getTasks().size());
+            taskCountLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            detailsPanel.add(taskCountLabel);
+            detailsPanel.add(Box.createVerticalStrut(10));
+
+            if(!project.getTasks().isEmpty()){
+                JLabel taskDetailsLabel = new JLabel("Task Details:");
+                taskDetailsLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                detailsPanel.add(taskDetailsLabel);
+                detailsPanel.add(Box.createVerticalStrut(5));
+
+                String[] taskNames = project.getTasks().stream()
+                    .map(Task::getName)
+                    .toArray(String[]::new);
+                JComboBox<String> taskDropdown = new JComboBox<>(taskNames);
+                taskDropdown.setMaximumSize(new Dimension(200, 25));
+                taskDropdown.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+                JPanel taskInfoPanel = new JPanel();
+                taskInfoPanel.setLayout(new BoxLayout(taskInfoPanel, BoxLayout.Y_AXIS));
+                taskInfoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+                Runnable updateTaskInfo = () -> {
+                    int index = taskDropdown.getSelectedIndex();
+                    Task selected = project.getTasks().get(index);
+                    taskInfoPanel.removeAll();
+
+                    JLabel tdesc = new JLabel("Description: " + (selected.getDescription().isBlank() ? "None" : selected.getDescription()));
+                    tdesc.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    taskInfoPanel.add(tdesc);
+
+                    JLabel tdue = new JLabel("Due Date: " + (selected.getDueDate() != null ? selected.getDueDate() : "Not set"));
+                    tdue.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    taskInfoPanel.add(tdue);
+
+                    JLabel tpriority = new JLabel("Priority: " + selected.getPriority());
+                    tpriority.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    taskInfoPanel.add(tpriority);
+
+                    JLabel tcomplete = new JLabel("Complete: " + (selected.getCompletion() ? "Yes" : "No"));
+                    tcomplete.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    taskInfoPanel.add(tcomplete);
+
+                    JLabel tcreated = new JLabel("Created: " + (selected.getCreationDate() != null ? selected.getCreationDate() : "Unknown"));
+                    tcreated.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    taskInfoPanel.add(tcreated);
+
+                    taskInfoPanel.revalidate();
+                    taskInfoPanel.repaint();
+                };
+
+                taskDropdown.addActionListener(de -> updateTaskInfo.run());
+                updateTaskInfo.run();
+
+                detailsPanel.add(taskDropdown);
+                detailsPanel.add(Box.createVerticalStrut(5));
+                detailsPanel.add(taskInfoPanel);
+            } else {
+                JLabel noTasksLabel = new JLabel("No tasks yet.");
+                noTasksLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                detailsPanel.add(noTasksLabel);
+            }
+
+            dialog.add(new JScrollPane(detailsPanel), BorderLayout.CENTER);
+            dialog.setVisible(true);
+        });
         
         reloadTasks(pm, project);
     }
     
     private void reloadTasks(ProjectManager pm, Project project) {
         // removes all tasks to add from scratch
+        updatePriorities(project);
         taskListPanel.removeAll();
         for(Task task : project.getTasks()){
             taskListPanel.add(new TaskPanel(pm, project, task));
         }
         taskListPanel.revalidate();
         taskListPanel.repaint();
+    }
+    
+    // updates the priorities of each task(left to right)
+    private void updatePriorities(Project project) {
+        for(int i = 0; i < project.getTasks().size(); i++){
+            project.getTasks().get(i).setPriority(i + 1);
+        }
     }
 }
