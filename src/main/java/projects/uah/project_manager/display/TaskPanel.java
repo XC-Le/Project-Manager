@@ -38,11 +38,13 @@ public class TaskPanel extends JPanel {
         add(infoPanel, BorderLayout.NORTH);
         
         // New button panel
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 0, 4));
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 0, 4));
         JButton addSubtaskBtn = new JButton("Add Subtask");
         buttonPanel.add(addSubtaskBtn);
         JButton delSubtaskBtn = new JButton("Delete Subtask");
         buttonPanel.add(delSubtaskBtn);
+        JButton deletedSubtasksBtn = new JButton("Deleted Subtasks");
+        buttonPanel.add(deletedSubtasksBtn);
         
         add(buttonPanel, BorderLayout.SOUTH);
         
@@ -102,7 +104,66 @@ public class TaskPanel extends JPanel {
                 }
             }
         });
-        
+        // listener for deleted subtasks button
+        deletedSubtasksBtn.addActionListener(e -> {
+            if(task.getDeletedSubtasks().isEmpty()){
+                JOptionPane.showMessageDialog(this, "No deleted subtasks.");
+                return;
+            }
+            String[] deletedNames = task.getDeletedSubtasks().stream()
+                .map(s -> s.getName() + "  |  Created: " + (s.getCreationDate() != null ? s.getCreationDate() : "Unknown"))
+                .toArray(String[]::new);
+            JDialog dialog = new JDialog();
+            dialog.setTitle("Deleted Subtasks");
+            dialog.setSize(400, 300);
+            dialog.setLocationRelativeTo(this);
+            dialog.setLayout(new BorderLayout());
+
+            JList<String> deletedList = new JList<>(deletedNames);
+            dialog.add(new JScrollPane(deletedList), BorderLayout.CENTER);
+
+            JButton restoreBtn = new JButton("Restore");
+            restoreBtn.addActionListener(re -> {
+            int index = deletedList.getSelectedIndex();
+            if(index == -1){
+                JOptionPane.showMessageDialog(dialog, "Please select a subtask to restore.");
+                return;
+            }
+            Subtask restored = task.getDeletedSubtasks().get(index);
+            task.getDeletedSubtasks().remove(index);
+            task.addSubtask(restored);
+            reloadSubtasks(pm, task);
+            checkForCompletion(pm, task);
+            dialog.dispose();
+            DataManager.save(pm);
+        });
+
+            JButton permDeleteBtn = new JButton("Delete Permanently");
+            permDeleteBtn.addActionListener(pd -> {
+                int index = deletedList.getSelectedIndex();
+                if(index == -1){
+                    JOptionPane.showMessageDialog(dialog, "Please select a subtask to delete.");
+                    return;
+                }
+                int confirm = JOptionPane.showConfirmDialog(
+                    dialog,
+                    "Are you sure? This cannot be undone.",
+                    "Confirm Permanent Delete",
+                    JOptionPane.YES_NO_OPTION
+                );
+                if(confirm == JOptionPane.YES_OPTION){
+                    task.getDeletedSubtasks().remove(index);
+                    dialog.dispose();
+                    DataManager.save(pm);
+                }
+            });
+
+            JPanel bottomBtns = new JPanel(new FlowLayout());
+            bottomBtns.add(restoreBtn);
+            bottomBtns.add(permDeleteBtn);
+            dialog.add(bottomBtns, BorderLayout.SOUTH);
+            dialog.setVisible(true);
+        });
         reloadSubtasks(pm, task);
         
         checkForCompletion(pm, task);

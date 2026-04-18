@@ -51,6 +51,13 @@ public class ProjectPanel extends JPanel {
         detailsBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonPanel.add(detailsBtn);
         
+        buttonPanel.add(Box.createVerticalGlue());
+
+        JButton checkDeletedTasksBtn = new JButton("Deleted Tasks");
+        checkDeletedTasksBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonPanel.add(checkDeletedTasksBtn);
+        
+
         add(buttonPanel, BorderLayout.EAST);
         
         // Creates the panel for the tasks
@@ -205,7 +212,65 @@ public class ProjectPanel extends JPanel {
             dialog.add(new JScrollPane(detailsPanel), BorderLayout.CENTER);
             dialog.setVisible(true);
         });
-        
+        // listener for check deleted tasks button
+        checkDeletedTasksBtn.addActionListener(e -> {
+            if(project.getDeletedTasks().isEmpty()){
+                JOptionPane.showMessageDialog(this, "No deleted tasks.");
+                return;
+            }
+            String[] deletedTaskNames = project.getDeletedTasks().stream()
+                .map(t -> t.getName() + "  |  Created: " + (t.getCreationDate() != null ? t.getCreationDate() : "Unknown"))
+                .toArray(String[]::new);
+            JDialog dialog = new JDialog();
+            dialog.setTitle("Deleted Tasks");
+            dialog.setSize(400, 300);
+            dialog.setLocationRelativeTo(this);
+            dialog.setLayout(new BorderLayout());
+
+            JList<String> deletedList = new JList<>(deletedTaskNames);
+            dialog.add(new JScrollPane(deletedList), BorderLayout.CENTER);
+
+            JButton restoreBtn = new JButton("Restore");
+            restoreBtn.addActionListener(re -> {
+                int index = deletedList.getSelectedIndex();
+                if(index == -1){
+                    JOptionPane.showMessageDialog(dialog, "Please select a task to restore.");
+                    return;
+                }
+                Task restored = project.getDeletedTasks().get(index);
+                project.getDeletedTasks().remove(index);
+                project.addTask(restored);
+                reloadTasks(pm, project);
+                dialog.dispose();
+                DataManager.save(pm);
+            });
+
+            JButton permDeleteBtn = new JButton("Delete Permanently");
+            permDeleteBtn.addActionListener(pd -> {
+                int index = deletedList.getSelectedIndex();
+                if(index == -1){
+                    JOptionPane.showMessageDialog(dialog, "Please select a task to delete.");
+                    return;
+                }
+                int confirm = JOptionPane.showConfirmDialog(
+                    dialog,
+                    "Are you sure? This cannot be undone.",
+                    "Confirm Permanent Delete",
+                    JOptionPane.YES_NO_OPTION
+                );
+                if(confirm == JOptionPane.YES_OPTION){
+                    project.getDeletedTasks().remove(index);
+                    dialog.dispose();
+                    DataManager.save(pm);
+                }
+            });
+
+            JPanel bottomBtns = new JPanel(new FlowLayout());
+            bottomBtns.add(restoreBtn);
+            bottomBtns.add(permDeleteBtn);
+            dialog.add(bottomBtns, BorderLayout.SOUTH);
+            dialog.setVisible(true);
+        });
         reloadTasks(pm, project);
     }
     

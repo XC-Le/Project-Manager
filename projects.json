@@ -27,7 +27,8 @@
               "dueDate": "2026-04-15",
               "isComplete": false
             }
-          ]
+          ],
+          "deletedSubtasks": []
         },
         {
           "name": "Task 2",
@@ -50,15 +51,35 @@
               "isComplete": true
             }
           ]
-        }
-      ],
-      "deletedTasks": [
+        },
         {
           "name": "woah",
           "description": "",
           "creationDate": "2026-04-18",
           "dueDate": "2026-04-18",
           "priority": 3,
+          "isComplete": false,
+          "subtasks": [],
+          "deletedSubtasks": []
+        }
+      ],
+      "deletedTasks": [
+        {
+          "name": "did you know",
+          "description": "",
+          "creationDate": "2026-04-18",
+          "dueDate": "2026-04-18",
+          "priority": 4,
+          "isComplete": false,
+          "subtasks": [],
+          "deletedSubtasks": []
+        },
+        {
+          "name": "that this actually works",
+          "description": "",
+          "creationDate": "2026-04-18",
+          "dueDate": "2026-04-18",
+          "priority": 4,
           "isComplete": false,
           "subtasks": [],
           "deletedSubtasks": []
