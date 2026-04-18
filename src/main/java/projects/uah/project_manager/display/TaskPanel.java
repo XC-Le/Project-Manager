@@ -18,15 +18,24 @@ public class TaskPanel extends JPanel {
      * @param task to display and keep data 
      */
     public TaskPanel(ProjectManager pm, Project project, Task task) {
-        setPreferredSize(new Dimension(200, 300));
+        setPreferredSize(new Dimension(270, 300));
         setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(8,8,8,8),
             new CompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(8, 8, 8, 8))));
         setLayout(new BorderLayout());
 
         // Header: task name and creation date
         JPanel infoPanel = new JPanel(new BorderLayout());
-        infoPanel.add(new JLabel(task.getName()), BorderLayout.WEST);
-        infoPanel.add(new JLabel("Created: " + task.getCreationDate()), BorderLayout.EAST);
+        JTextArea title = new JTextArea(task.getName()); 
+        title.setEditable(false);
+        title.setFocusable(false); 
+        title.setBorder(null); 
+        title.setBackground(null);
+        title.setLineWrap(true);
+        title.setWrapStyleWord(true);
+        infoPanel.add(title, BorderLayout.WEST);
+        JLabel creationDate = new JLabel("Created: " + task.getCreationDate());
+        infoPanel.add(creationDate, BorderLayout.EAST);
+        setMinimumSize(new Dimension(200, 250));
         add(infoPanel, BorderLayout.NORTH);
         
         // New button panel
