@@ -66,6 +66,7 @@ public class TaskPanel extends JPanel {
                 task.addSubtask(new Subtask(name, LocalDate.now(), false));
                 DataManager.save(pm);
                 reloadSubtasks(pm, task);
+                checkForCompletion(pm, task);
             }
         });  
         
@@ -96,12 +97,16 @@ public class TaskPanel extends JPanel {
                     int  index = subtask_list.getSelectedIndex();
                     task.removeSubtask(index);
                     reloadSubtasks(pm, task);
+                    checkForCompletion(pm, task);
                     DataManager.save(pm); 
                 }
             }
         });
         
         reloadSubtasks(pm, task);
+        
+        checkForCompletion(pm, task);
+        
         
     }
     
@@ -112,10 +117,30 @@ public class TaskPanel extends JPanel {
             checkBox.addActionListener(e -> {
                 subtask.setCompletion(checkBox.isSelected());
                 DataManager.save(pm);
+                checkForCompletion(pm, task);
             });
             subtaskListPanel.add(checkBox);
         }
         subtaskListPanel.revalidate();
         subtaskListPanel.repaint();
+    }
+    
+    private void checkForCompletion(ProjectManager pm, Task task) {
+        boolean isready = true;
+        for (Subtask subtask2 : task.getSubtasks()) {
+            isready = isready && subtask2.getCompletion();
+            //System.out.println("Checked? " + isready);
+        }
+        if (!task.getSubtasks().isEmpty()) {
+            task.setCompletion(isready);
+        }
+        System.out.println("All checked for " + task.getName() + "? " + task.getCompletion());
+        if (task.getCompletion()) {
+            setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(8,8,8,8),
+                new CompoundBorder(BorderFactory.createLineBorder(Color.GREEN),BorderFactory.createEmptyBorder(8, 8, 8, 8))));
+        } else {
+            setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(8,8,8,8),
+                new CompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(8, 8, 8, 8))));
+        }
     }
 }
