@@ -35,7 +35,6 @@ public class TaskPanel extends JPanel {
         infoPanel.add(title, BorderLayout.WEST);
         JLabel creationDate = new JLabel("Created: " + task.getCreationDate());
         infoPanel.add(creationDate, BorderLayout.EAST);
-        setMinimumSize(new Dimension(200, 250));
         add(infoPanel, BorderLayout.NORTH);
         
         // New button panel
