@@ -134,7 +134,7 @@ public class TaskPanel extends JPanel {
         if (!task.getSubtasks().isEmpty()) {
             task.setCompletion(isready);
         }
-        System.out.println("All checked for " + task.getName() + "? " + task.getCompletion());
+        //System.out.println("All checked for " + task.getName() + "? " + task.getCompletion());
         if (task.getCompletion()) {
             setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(8,8,8,8),
                 new CompoundBorder(BorderFactory.createLineBorder(Color.GREEN),BorderFactory.createEmptyBorder(8, 8, 8, 8))));
