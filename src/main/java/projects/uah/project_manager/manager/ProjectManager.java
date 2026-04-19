@@ -15,6 +15,7 @@ public class ProjectManager {
 
     private java.util.List<Project> projects = new ArrayList<>();
     private java.util.List<Project> del_projects = new ArrayList<>();
+    private java.util.List<Project> completed_projects = new ArrayList<>();
     
     /**
      * Constructs a new ProjectManager with an empty project list.
@@ -100,5 +101,28 @@ public class ProjectManager {
      */
     public void setDeletedProjects(List<Project> del_projects){
         this.del_projects = del_projects;
+    }
+    /**
+     * Returns list of all completed projects
+     * 
+     * @return completed_projects
+     */
+    public List<Project> getCompletedProjects() {
+        return completed_projects;
+    }
+    /**
+     * Sets the list of deleted projects
+     * 
+     * @param projects 
+     */
+    public void setCompletedProjects(List<Project> completed_projects) {
+        this.completed_projects.clear();
+        this.completed_projects.addAll(completed_projects);
+    }
+    
+    // adds a project to the completed projects list
+    public void completeProject(int index) {
+        completed_projects.add(projects.get(index));
+        projects.remove(index);
     }
 }

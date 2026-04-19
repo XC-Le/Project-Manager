@@ -24,10 +24,9 @@ public class DataManager {
     
     
     public static void save(ProjectManager pm){
-        SaveData to_save = new SaveData(pm.getProjects(), pm.getDeletedProjects());
+        SaveData to_save = new SaveData(pm.getProjects(), pm.getDeletedProjects(), pm.getCompletedProjects());
         try(Writer writer = new FileWriter(SAVE_FILE)){
             gson.toJson(to_save, writer);
-            System.out.println("Data saved to: " + new File(SAVE_FILE).getAbsolutePath());
         } catch(IOException e){
             System.err.println("Failed to save: " + e.getMessage());
         }
@@ -39,9 +38,12 @@ public class DataManager {
             System.out.println("No save file found.");
         }
         try(Reader reader = new FileReader(file )){
-               SaveData to_load = gson.fromJson(reader, SaveData.class);
-               pm.setProjects(to_load.projects);
-               pm.setDeletedProjects(to_load.del_projects);
+            SaveData to_load = gson.fromJson(reader, SaveData.class);
+            pm.setProjects(to_load.projects);
+            pm.setDeletedProjects(to_load.del_projects);
+            if(to_load.completed_projects != null){
+                pm.setCompletedProjects(to_load.completed_projects);
+            }
         } catch (IOException e) {
             System.err.println("Failed to load: " + e.getMessage());
         }
@@ -51,10 +53,12 @@ public class DataManager {
     private static class SaveData{
         List<Project> projects;
         List<Project> del_projects;
+        List<Project> completed_projects;
         
-        SaveData(List<Project> projects, List<Project> del_projects){
+        SaveData(List<Project> projects, List<Project> del_projects, List<Project> completed_projects){
             this.projects = projects;
             this.del_projects = del_projects;
+            this.completed_projects = completed_projects;
         }
     }
 }

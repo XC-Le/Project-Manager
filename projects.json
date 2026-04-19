@@ -1,8 +1,85 @@
 {
   "projects": [
     {
-      "name": "Project 1",
+      "name": "Project 3",
       "description": "",
+      "creationDate": "2026-04-15",
+      "dueDate": "2026-04-25",
+      "isActive": true,
+      "tasks": [
+        {
+          "name": "Crying",
+          "description": "",
+          "creationDate": "2026-04-15",
+          "dueDate": "2026-04-15",
+          "priority": 1,
+          "isComplete": false,
+          "subtasks": [
+            {
+              "name": "Sit in bed",
+              "creationDate": "2026-04-15",
+              "dueDate": "2026-04-15",
+              "isComplete": false
+            },
+            {
+              "name": "Think about dying dogs",
+              "creationDate": "2026-04-15",
+              "dueDate": "2026-04-15",
+              "isComplete": false
+            },
+            {
+              "name": "Sadness",
+              "creationDate": "2026-04-15",
+              "dueDate": "2026-04-15",
+              "isComplete": false
+            },
+            {
+              "name": "ltekp",
+              "creationDate": "2026-04-15",
+              "dueDate": "2026-04-15",
+              "isComplete": false
+            }
+          ]
+        },
+        {
+          "name": "Stop crying",
+          "description": "",
+          "creationDate": "2026-04-15",
+          "dueDate": "2026-04-15",
+          "priority": 2,
+          "isComplete": false,
+          "subtasks": [
+            {
+              "name": "Hug a plush",
+              "creationDate": "2026-04-15",
+              "dueDate": "2026-04-15",
+              "isComplete": false
+            },
+            {
+              "name": "Thing about Erin",
+              "creationDate": "2026-04-15",
+              "dueDate": "2026-04-15",
+              "isComplete": false
+            },
+            {
+              "name": "Watch anime",
+              "creationDate": "2026-04-15",
+              "dueDate": "2026-04-15",
+              "isComplete": false
+            },
+            {
+              "name": "yes",
+              "creationDate": "2026-04-15",
+              "dueDate": "2026-04-15",
+              "isComplete": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Project 1",
+      "description": "This is the testing project :D",
       "creationDate": "2026-04-15",
       "dueDate": "2026-04-16",
       "isActive": true,
@@ -13,7 +90,7 @@
           "creationDate": "2026-04-15",
           "dueDate": "2026-04-15",
           "priority": 1,
-          "isComplete": false,
+          "isComplete": true,
           "subtasks": [
             {
               "name": "Subtask 1",
@@ -25,7 +102,7 @@
               "name": "Subtask 2",
               "creationDate": "2026-04-15",
               "dueDate": "2026-04-15",
-              "isComplete": false
+              "isComplete": true
             }
           ],
           "deletedSubtasks": []
@@ -36,13 +113,13 @@
           "creationDate": "2026-04-16",
           "dueDate": "2026-04-16",
           "priority": 2,
-          "isComplete": false,
+          "isComplete": true,
           "subtasks": [
             {
               "name": "Subtask 1 ",
               "creationDate": "2026-04-16",
               "dueDate": "2026-04-16",
-              "isComplete": false
+              "isComplete": true
             },
             {
               "name": "Subtask 2",
@@ -53,23 +130,20 @@
           ]
         },
         {
-          "name": "woah",
-          "description": "",
-          "creationDate": "2026-04-18",
-          "dueDate": "2026-04-18",
-          "priority": 3,
-          "isComplete": false,
-          "subtasks": [],
-          "deletedSubtasks": []
-        },
-        {
           "name": "Do I have a description?",
           "description": "Yes I do!!",
           "creationDate": "2026-04-18",
           "dueDate": "2026-04-18",
-          "priority": 4,
+          "priority": 3,
           "isComplete": false,
-          "subtasks": [],
+          "subtasks": [
+            {
+              "name": "YE",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            }
+          ],
           "deletedSubtasks": []
         }
       ],
@@ -93,92 +167,60 @@
           "isComplete": false,
           "subtasks": [],
           "deletedSubtasks": []
+        },
+        {
+          "name": "woah",
+          "description": "",
+          "creationDate": "2026-04-18",
+          "dueDate": "2026-04-18",
+          "priority": 3,
+          "isComplete": false,
+          "subtasks": [
+            {
+              "name": "Ye",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": false
+            }
+          ],
+          "deletedSubtasks": []
         }
       ]
-    },
+    }
+  ],
+  "del_projects": [
     {
-      "name": "Project 3",
+      "name": "Project 2",
       "description": "",
       "creationDate": "2026-04-15",
-      "dueDate": "2026-04-25",
-      "isActive": true,
+      "dueDate": "2026-04-30",
+      "isActive": false,
       "tasks": [
         {
-          "name": "Crying",
+          "name": "Task 1",
           "description": "",
           "creationDate": "2026-04-15",
           "dueDate": "2026-04-15",
           "priority": 1,
           "isComplete": false,
-          "subtasks": [
-            {
-              "name": "Sit in bed",
-              "creationDate": "2026-04-15",
-              "dueDate": "2026-04-15",
-              "isComplete": true
-            },
-            {
-              "name": "Think about dying dogs",
-              "creationDate": "2026-04-15",
-              "dueDate": "2026-04-15",
-              "isComplete": false
-            },
-            {
-              "name": "Sadness",
-              "creationDate": "2026-04-15",
-              "dueDate": "2026-04-15",
-              "isComplete": true
-            },
-            {
-              "name": "ltekp",
-              "creationDate": "2026-04-15",
-              "dueDate": "2026-04-15",
-              "isComplete": false
-            }
-          ]
-        },
-        {
-          "name": "Stop crying",
-          "description": "",
-          "creationDate": "2026-04-15",
-          "dueDate": "2026-04-15",
-          "priority": 2,
-          "isComplete": true,
-          "subtasks": [
-            {
-              "name": "Hug a plush",
-              "creationDate": "2026-04-15",
-              "dueDate": "2026-04-15",
-              "isComplete": true
-            },
-            {
-              "name": "Thing about Erin",
-              "creationDate": "2026-04-15",
-              "dueDate": "2026-04-15",
-              "isComplete": true
-            },
-            {
-              "name": "Watch anime",
-              "creationDate": "2026-04-15",
-              "dueDate": "2026-04-15",
-              "isComplete": true
-            },
-            {
-              "name": "yes",
-              "creationDate": "2026-04-15",
-              "dueDate": "2026-04-15",
-              "isComplete": true
-            }
-          ]
+          "subtasks": []
         }
       ]
+    },
+    {
+      "name": "Project 4",
+      "description": "",
+      "creationDate": "2026-04-16",
+      "dueDate": "2026-04-24",
+      "isActive": false,
+      "tasks": []
     },
     {
       "name": "Play a Kirby Game",
       "description": "Play this Kirby Game",
       "creationDate": "2026-04-18",
       "dueDate": "2026-04-23",
-      "isActive": true,
+      "isActive": false,
       "tasks": [
         {
           "name": "Pick up a Game",
@@ -292,32 +334,5 @@
       ]
     }
   ],
-  "del_projects": [
-    {
-      "name": "Project 2",
-      "description": "",
-      "creationDate": "2026-04-15",
-      "dueDate": "2026-04-30",
-      "isActive": false,
-      "tasks": [
-        {
-          "name": "Task 1",
-          "description": "",
-          "creationDate": "2026-04-15",
-          "dueDate": "2026-04-15",
-          "priority": 1,
-          "isComplete": false,
-          "subtasks": []
-        }
-      ]
-    },
-    {
-      "name": "Project 4",
-      "description": "",
-      "creationDate": "2026-04-16",
-      "dueDate": "2026-04-24",
-      "isActive": false,
-      "tasks": []
-    }
-  ]
+  "completed_projects": []
 }
