@@ -133,11 +133,19 @@ public class Task {
      */
     public void setCompletion(boolean isComplete) {
         this.isComplete = isComplete;
+        for(Subtask st : subtasks){
+            st.setCompletion(isComplete);
+        }
     }
     
     public List<Subtask> getSubtasks(){
         return this.subtasks;
     }
+    
+    public Subtask getSubtask(int index){
+        return subtasks.get(index);
+    }
+    
     public List<Subtask> getDeletedSubtasks() {
         if(deletedSubtasks == null) deletedSubtasks = new ArrayList<>();
         return this.deletedSubtasks;

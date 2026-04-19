@@ -228,7 +228,15 @@ public class MainFrame extends JFrame {
                                 t.setPriority(new_task_priority);
                             }
                             case 3 -> {
-                                
+                                int completion_check = JOptionPane.showConfirmDialog(
+                                    this, 
+                                    "Toggle completion?", 
+                                    "Confirm", 
+                                    JOptionPane.YES_NO_OPTION
+                                );
+                                if(completion_check == JOptionPane.YES_OPTION){
+                                    t.setCompletion(!t.getCompletion());
+                                }
                             }
                             case 4 -> {
                                 JDateChooser dateChooser = new JDateChooser();
@@ -241,12 +249,63 @@ public class MainFrame extends JFrame {
                                 if (option == JOptionPane.OK_OPTION) {
                                     Date selectedDate = dateChooser.getDate();
                                     LocalDate dueDate = LocalDate.ofInstant(selectedDate.toInstant(), ZoneId.systemDefault());
-                                    p.setDueDate(dueDate);
+                                    t.setDueDate(dueDate);
+                                }
+                            }
+                            case 5 -> {
+                                String[] subtaskNames = t.getSubtasks().stream().map(Subtask::getName).toArray(String[]::new);
+                                JList<String> subtask_names = new JList<>(subtaskNames);
+                                JOptionPane.showConfirmDialog(
+                                        this,
+                                        new JScrollPane(subtask_names),
+                                        "Select a subtask to edit",
+                                        JOptionPane.OK_CANCEL_OPTION 
+                                );
+                                Subtask st  = t.getSubtask(task_names.getSelectedIndex());
+                                subtask_details.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                                subtask_details.setSelectedIndex(0);
+                                JOptionPane.showConfirmDialog(
+                                        this,
+                                        new JScrollPane(subtask_details),
+                                        "Select a detail to edit",
+                                        JOptionPane.OK_CANCEL_OPTION
+                                ); 
+
+                                int subtask_index = subtask_details.getSelectedIndex();
+                                switch(subtask_index){
+                                    case 0 -> {
+                                        String new_task_name = JOptionPane.showInputDialog(this, "Enter new task name:");
+                                        if(new_task_name != null && !new_task_name.isBlank()){st.setName(new_task_name);}
+                                    }
+                                    case 1 -> {
+                                        int completion_check = JOptionPane.showConfirmDialog(
+                                            this, 
+                                            "Toggle completion?", 
+                                            "Confirm", 
+                                            JOptionPane.YES_NO_OPTION
+                                        );
+                                        if(completion_check == JOptionPane.YES_OPTION){
+                                            st.setCompletion(!st.getCompletion());
+                                        }
+                                    }
+                                    case 2 -> {
+                                        JDateChooser dateChooser = new JDateChooser();
+                                        dateChooser.setMinSelectableDate(new Date());
+
+                                        Object[] message = {"Select a new due date:", dateChooser};
+
+                                        int option = JOptionPane.showConfirmDialog(null, message, "Due Date", JOptionPane.OK_CANCEL_OPTION);
+
+                                        if (option == JOptionPane.OK_OPTION) {
+                                            Date selectedDate = dateChooser.getDate();
+                                            LocalDate dueDate = LocalDate.ofInstant(selectedDate.toInstant(), ZoneId.systemDefault());
+                                            st.setDueDate(dueDate);
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                
                 }
             }
             
