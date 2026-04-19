@@ -127,6 +127,10 @@ public class Project {
         return this.tasks;
     }
     
+    public Task getTask(int index){
+        return tasks.get(index);
+    }
+    
     /**
      * Returns the deleted tasks for the project.
      *

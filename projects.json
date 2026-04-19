@@ -1,7 +1,68 @@
 {
   "projects": [
     {
-      "name": "Project 1",
+      "name": "Xavier\u0027s Project",
+      "description": "How he soothes his girlfriend",
+      "creationDate": "2026-04-18",
+      "dueDate": "2026-05-04",
+      "isActive": true,
+      "tasks": [
+        {
+          "name": "Buy Flowers",
+          "description": "go buy her flower",
+          "creationDate": "2026-04-18",
+          "dueDate": "2026-04-18",
+          "priority": 1,
+          "isComplete": false,
+          "subtasks": [
+            {
+              "name": "get in car",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "start car",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "drive to store",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "buy her flowers",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            },
+            {
+              "name": "arrange flowers",
+              "creationDate": "2026-04-18",
+              "dueDate": "2026-04-18",
+              "isComplete": true
+            }
+          ],
+          "deletedSubtasks": []
+        },
+        {
+          "name": "buy teddy bear",
+          "description": "go buy teddy bear",
+          "creationDate": "2026-04-18",
+          "dueDate": "2026-04-18",
+          "priority": 2,
+          "isComplete": false,
+          "subtasks": [],
+          "deletedSubtasks": []
+        }
+      ],
+      "deletedTasks": []
+    },
+    {
+      "name": "Ok",
       "description": "",
       "creationDate": "2026-04-15",
       "dueDate": "2026-04-16",
@@ -54,7 +115,7 @@
         },
         {
           "name": "woah",
-          "description": "",
+          "description": "Hello",
           "creationDate": "2026-04-18",
           "dueDate": "2026-04-18",
           "priority": 3,
@@ -152,12 +213,6 @@
               "isComplete": true
             },
             {
-              "name": "Thing about Erin",
-              "creationDate": "2026-04-15",
-              "dueDate": "2026-04-15",
-              "isComplete": true
-            },
-            {
               "name": "Watch anime",
               "creationDate": "2026-04-15",
               "dueDate": "2026-04-15",
@@ -169,7 +224,8 @@
               "dueDate": "2026-04-15",
               "isComplete": true
             }
-          ]
+          ],
+          "deletedSubtasks": []
         }
       ]
     },
@@ -318,6 +374,15 @@
       "dueDate": "2026-04-24",
       "isActive": false,
       "tasks": []
+    },
+    {
+      "name": "yes",
+      "description": "",
+      "creationDate": "2026-04-18",
+      "dueDate": "2026-04-23",
+      "isActive": false,
+      "tasks": [],
+      "deletedTasks": []
     }
   ]
 }
