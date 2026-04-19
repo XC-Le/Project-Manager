@@ -10,14 +10,10 @@ import projects.uah.project_manager.model.*;
 public class TaskPanel extends JPanel {
 
     JPanel subtaskListPanel = new JPanel();
+    Runnable onCompletionChanged;
     
-    /**
-     * Constructs a new TaskPanel and initializes its UI components.
-     * @param pm      project manager to save data
-     * @param project project that the task is part of
-     * @param task to display and keep data 
-     */
-    public TaskPanel(ProjectManager pm, Project project, Task task) {
+    public TaskPanel(ProjectManager pm, Project project, Task task, Runnable onCompletionChanged) {
+        this.onCompletionChanged = onCompletionChanged;
         setPreferredSize(new Dimension(270, 300));
         setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(8,8,8,8),
             new CompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(8, 8, 8, 8))));
@@ -37,7 +33,7 @@ public class TaskPanel extends JPanel {
         infoPanel.add(creationDate, BorderLayout.EAST);
         add(infoPanel, BorderLayout.NORTH);
         
-        // New button panel
+        // Button panel
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 0, 4));
         JButton addSubtaskBtn = new JButton("Add Subtask");
         buttonPanel.add(addSubtaskBtn);
@@ -45,7 +41,6 @@ public class TaskPanel extends JPanel {
         buttonPanel.add(delSubtaskBtn);
         JButton deletedSubtasksBtn = new JButton("Deleted Subtasks");
         buttonPanel.add(deletedSubtasksBtn);
-        
         add(buttonPanel, BorderLayout.SOUTH);
         
         // Subtask list
@@ -56,54 +51,43 @@ public class TaskPanel extends JPanel {
         scrollPane.setBorder(null);
         add(scrollPane, BorderLayout.CENTER);
         
-        // listener for add button
+        // listener for add subtask button
         addSubtaskBtn.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Subtask name:");
-            
-            boolean exists = project.getTasks().stream().anyMatch(p -> p.getName().equalsIgnoreCase(name));
- 
+            boolean exists = task.getSubtasks().stream().anyMatch(s -> s.getName().equalsIgnoreCase(name));
             if(exists){
-                JOptionPane.showMessageDialog(this, "A subtask with that name already exists in this project.");
+                JOptionPane.showMessageDialog(this, "A subtask with that name already exists.");
             } else if(name != null && !name.isBlank()) {
                 task.addSubtask(new Subtask(name, LocalDate.now(), false));
                 DataManager.save(pm);
-                reloadSubtasks(pm, task);
-                checkForCompletion(pm, task);
+                reloadSubtasks(pm, project, task);
+                checkForCompletion(pm, project, task);
             }
         });  
         
-        // listener for delete button
+        // listener for delete subtask button
         delSubtaskBtn.addActionListener(e -> {
-            String[] subtask_names = task.getSubtasks().stream().map(Subtask::getName).toArray(String[]::new);
             if(task.getSubtasks().isEmpty()){
-                JOptionPane.showMessageDialog(this, "No tasks to delete.");
+                JOptionPane.showMessageDialog(this, "No subtasks to delete.");
                 return;
             }
+            String[] subtask_names = task.getSubtasks().stream().map(Subtask::getName).toArray(String[]::new);
             JList<String> subtask_list = new JList<>(subtask_names);
             subtask_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             subtask_list.setSelectedIndex(0);
-            int select_project = JOptionPane.showConfirmDialog(
-                this,
-                new JScrollPane(subtask_list),
-                "Select Project to Delete",
-                JOptionPane.OK_CANCEL_OPTION
-            );
-            if(select_project == JOptionPane.OK_OPTION){
-                int double_check = JOptionPane.showConfirmDialog(
-                    this,
-                    "Are you sure?",
-                    "Confirm",
-                    JOptionPane.YES_NO_OPTION
-                );
+            int select = JOptionPane.showConfirmDialog(
+                this, new JScrollPane(subtask_list), "Select Subtask to Delete", JOptionPane.OK_CANCEL_OPTION);
+            if(select == JOptionPane.OK_OPTION){
+                int double_check = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
                 if(double_check == JOptionPane.YES_OPTION){
-                    int  index = subtask_list.getSelectedIndex();
-                    task.removeSubtask(index);
-                    reloadSubtasks(pm, task);
-                    checkForCompletion(pm, task);
+                    task.removeSubtask(subtask_list.getSelectedIndex());
+                    reloadSubtasks(pm, project, task);
+                    checkForCompletion(pm, project, task);
                     DataManager.save(pm); 
                 }
             }
         });
+
         // listener for deleted subtasks button
         deletedSubtasksBtn.addActionListener(e -> {
             if(task.getDeletedSubtasks().isEmpty()){
@@ -124,19 +108,19 @@ public class TaskPanel extends JPanel {
 
             JButton restoreBtn = new JButton("Restore");
             restoreBtn.addActionListener(re -> {
-            int index = deletedList.getSelectedIndex();
-            if(index == -1){
-                JOptionPane.showMessageDialog(dialog, "Please select a subtask to restore.");
-                return;
-            }
-            Subtask restored = task.getDeletedSubtasks().get(index);
-            task.getDeletedSubtasks().remove(index);
-            task.addSubtask(restored);
-            reloadSubtasks(pm, task);
-            checkForCompletion(pm, task);
-            dialog.dispose();
-            DataManager.save(pm);
-        });
+                int index = deletedList.getSelectedIndex();
+                if(index == -1){
+                    JOptionPane.showMessageDialog(dialog, "Please select a subtask to restore.");
+                    return;
+                }
+                Subtask restored = task.getDeletedSubtasks().get(index);
+                task.getDeletedSubtasks().remove(index);
+                task.addSubtask(restored);
+                reloadSubtasks(pm, project, task);
+                checkForCompletion(pm, project, task);
+                dialog.dispose();
+                DataManager.save(pm);
+            });
 
             JButton permDeleteBtn = new JButton("Delete Permanently");
             permDeleteBtn.addActionListener(pd -> {
@@ -146,11 +130,7 @@ public class TaskPanel extends JPanel {
                     return;
                 }
                 int confirm = JOptionPane.showConfirmDialog(
-                    dialog,
-                    "Are you sure? This cannot be undone.",
-                    "Confirm Permanent Delete",
-                    JOptionPane.YES_NO_OPTION
-                );
+                    dialog, "Are you sure? This cannot be undone.", "Confirm Permanent Delete", JOptionPane.YES_NO_OPTION);
                 if(confirm == JOptionPane.YES_OPTION){
                     task.getDeletedSubtasks().remove(index);
                     dialog.dispose();
@@ -164,21 +144,19 @@ public class TaskPanel extends JPanel {
             dialog.add(bottomBtns, BorderLayout.SOUTH);
             dialog.setVisible(true);
         });
-        reloadSubtasks(pm, task);
-        
-        checkForCompletion(pm, task);
-        
-        
+
+        reloadSubtasks(pm, project, task);
+        checkForCompletion(pm, project, task);
     }
     
-    private void reloadSubtasks(ProjectManager pm, Task task) {
+    private void reloadSubtasks(ProjectManager pm, Project project, Task task) {
         subtaskListPanel.removeAll();
         for (Subtask subtask : task.getSubtasks()) {
             JCheckBox checkBox = new JCheckBox(subtask.getName(), subtask.getCompletion());
             checkBox.addActionListener(e -> {
                 subtask.setCompletion(checkBox.isSelected());
                 DataManager.save(pm);
-                checkForCompletion(pm, task);
+                checkForCompletion(pm, project, task);
             });
             subtaskListPanel.add(checkBox);
         }
@@ -186,22 +164,41 @@ public class TaskPanel extends JPanel {
         subtaskListPanel.repaint();
     }
     
-    private void checkForCompletion(ProjectManager pm, Task task) {
+    private void checkForCompletion(ProjectManager pm, Project project, Task task) {
         boolean isready = true;
         for (Subtask subtask2 : task.getSubtasks()) {
             isready = isready && subtask2.getCompletion();
-            //System.out.println("Checked? " + isready);
         }
         if (!task.getSubtasks().isEmpty()) {
             task.setCompletion(isready);
         }
-        //System.out.println("All checked for " + task.getName() + "? " + task.getCompletion());
         if (task.getCompletion()) {
             setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(8,8,8,8),
                 new CompoundBorder(BorderFactory.createLineBorder(Color.GREEN),BorderFactory.createEmptyBorder(8, 8, 8, 8))));
         } else {
             setBorder(new CompoundBorder(BorderFactory.createEmptyBorder(8,8,8,8),
                 new CompoundBorder(BorderFactory.createLineBorder(Color.GRAY),BorderFactory.createEmptyBorder(8, 8, 8, 8))));
+        }
+        if(!project.getTasks().isEmpty()){
+            boolean allComplete = project.getTasks().stream().allMatch(Task::getCompletion);
+            if(allComplete){
+                int choice = JOptionPane.showConfirmDialog(
+                    this,
+                    "Congratulations! All tasks in \"" + project.getName() + "\" are complete!\nWould you like to move this project to completed projects?",
+                    "Project Complete!",
+                    JOptionPane.YES_NO_OPTION
+                );
+                if(choice == JOptionPane.YES_OPTION){
+                    int index = pm.getProjects().indexOf(project);
+                    pm.completeProject(index);
+                    DataManager.save(pm);
+                    JTabbedPane tabs = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
+                    if(tabs != null){
+                        tabs.remove(tabs.getSelectedIndex());
+                    }
+                }
+            }
+            if(onCompletionChanged != null) onCompletionChanged.run();
         }
     }
 }

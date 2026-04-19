@@ -7,46 +7,30 @@ import projects.uah.project_manager.model.Project;
 import projects.uah.project_manager.model.Task;
 import projects.uah.project_manager.manager.*;
  
-/**
- * A Swing panel that displays and manages the list of projects.
- * Allows users to view, create, and interact with projects through the graphical interface.
- *
- * @author XC-Le and Duncan Williams
- * @version 1.2
- */
 public class ProjectPanel extends JPanel {
     
     JPanel taskListPanel = new JPanel();
     
-    /**
-     * Constructs a new ProjectPanel and initializes its UI components.
-     * @param project
-     */
-    public ProjectPanel(ProjectManager pm, Project project) {
+    public ProjectPanel(ProjectManager pm, Project project, Runnable onCompletionChanged) {
         
         setLayout(new BorderLayout());    
         setVisible(true);
         
-        // New button panel
+        // Button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
  
-        // add task button
         JButton addTaskBtn = new JButton("New Task");
         addTaskBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonPanel.add(addTaskBtn);
- 
         buttonPanel.add(Box.createVerticalStrut(5));
  
-        // delete task button
         JButton delTaskBtn = new JButton("Delete Task");
         delTaskBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonPanel.add(delTaskBtn);
-        
         buttonPanel.add(Box.createVerticalStrut(5));
         
-        // project details button
         JButton detailsBtn = new JButton("Details");
         detailsBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonPanel.add(detailsBtn);
@@ -56,22 +40,16 @@ public class ProjectPanel extends JPanel {
         JButton checkDeletedTasksBtn = new JButton("Deleted Tasks");
         checkDeletedTasksBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonPanel.add(checkDeletedTasksBtn);
-        
+        buttonPanel.add(Box.createVerticalStrut(10));
 
         add(buttonPanel, BorderLayout.EAST);
         
-        // Creates the panel for the tasks
         taskListPanel.setLayout(new BoxLayout(taskListPanel, BoxLayout.X_AXIS));
-        
-        // M
         JScrollPane scrollPane = new JScrollPane(taskListPanel);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        
         add(scrollPane, BorderLayout.CENTER);
  
-        // Listeners 
-        
         // listener for add button
         addTaskBtn.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Task name:");
@@ -83,41 +61,32 @@ public class ProjectPanel extends JPanel {
                 project.addTask(new Task(name, description != null ? description : "", LocalDate.now(), 1, false));
                 updatePriorities(project);
                 DataManager.save(pm);
-                reloadTasks(pm, project);
+                reloadTasks(pm, project, onCompletionChanged);
             }
         });
         
         // listener for delete button
         delTaskBtn.addActionListener(e -> {
-            String[] task_names = project.getTasks().stream().map(Task::getName).toArray(String[]::new);
             if(project.getTasks().isEmpty()){
                 JOptionPane.showMessageDialog(this, "No tasks to delete.");
                 return;
             }
+            String[] task_names = project.getTasks().stream().map(Task::getName).toArray(String[]::new);
             JList<String> task_list = new JList<>(task_names);
             task_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             task_list.setSelectedIndex(0);
             int select_task = JOptionPane.showConfirmDialog(
-                this,
-                new JScrollPane(task_list),
-                "Select Project to Delete",
-                JOptionPane.OK_CANCEL_OPTION
-            );
+                this, new JScrollPane(task_list), "Select Task to Delete", JOptionPane.OK_CANCEL_OPTION);
             if(select_task == JOptionPane.OK_OPTION){
-                int double_check = JOptionPane.showConfirmDialog(
-                    this,
-                    "Are you sure?",
-                    "Confirm",
-                    JOptionPane.YES_NO_OPTION
-                );
+                int double_check = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
                 if(double_check == JOptionPane.YES_OPTION){
-                    int  index = task_list.getSelectedIndex();
-                    project.removeTask(index);
-                    reloadTasks(pm, project);
+                    project.removeTask(task_list.getSelectedIndex());
+                    reloadTasks(pm, project, onCompletionChanged);
                     DataManager.save(pm); 
                 }
             }
         });
+
         // listener for details button
         detailsBtn.addActionListener(e -> {
             JDialog dialog = new JDialog();
@@ -130,7 +99,6 @@ public class ProjectPanel extends JPanel {
             detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
             detailsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            // project description
             JLabel descLabel = new JLabel("Project Description:");
             descLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             detailsPanel.add(descLabel);
@@ -180,8 +148,7 @@ public class ProjectPanel extends JPanel {
                 detailsPanel.add(Box.createVerticalStrut(5));
 
                 String[] taskNames = project.getTasks().stream()
-                    .map(Task::getName)
-                    .toArray(String[]::new);
+                    .map(Task::getName).toArray(String[]::new);
                 JComboBox<String> taskDropdown = new JComboBox<>(taskNames);
                 taskDropdown.setMaximumSize(new Dimension(200, 25));
                 taskDropdown.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -256,6 +223,7 @@ public class ProjectPanel extends JPanel {
             dialog.add(new JScrollPane(detailsPanel), BorderLayout.CENTER);
             dialog.setVisible(true);
         });
+
         // listener for check deleted tasks button
         checkDeletedTasksBtn.addActionListener(e -> {
             if(project.getDeletedTasks().isEmpty()){
@@ -284,7 +252,7 @@ public class ProjectPanel extends JPanel {
                 Task restored = project.getDeletedTasks().get(index);
                 project.getDeletedTasks().remove(index);
                 project.addTask(restored);
-                reloadTasks(pm, project);
+                reloadTasks(pm, project, onCompletionChanged);
                 dialog.dispose();
                 DataManager.save(pm);
             });
@@ -297,11 +265,7 @@ public class ProjectPanel extends JPanel {
                     return;
                 }
                 int confirm = JOptionPane.showConfirmDialog(
-                    dialog,
-                    "Are you sure? This cannot be undone.",
-                    "Confirm Permanent Delete",
-                    JOptionPane.YES_NO_OPTION
-                );
+                    dialog, "Are you sure? This cannot be undone.", "Confirm Permanent Delete", JOptionPane.YES_NO_OPTION);
                 if(confirm == JOptionPane.YES_OPTION){
                     project.getDeletedTasks().remove(index);
                     dialog.dispose();
@@ -315,21 +279,20 @@ public class ProjectPanel extends JPanel {
             dialog.add(bottomBtns, BorderLayout.SOUTH);
             dialog.setVisible(true);
         });
-        reloadTasks(pm, project);
+
+        reloadTasks(pm, project, onCompletionChanged);
     }
     
-    private void reloadTasks(ProjectManager pm, Project project) {
-        // removes all tasks to add from scratch
+    private void reloadTasks(ProjectManager pm, Project project, Runnable onCompletionChanged) {
         updatePriorities(project);
         taskListPanel.removeAll();
         for(Task task : project.getTasks()){
-            taskListPanel.add(new TaskPanel(pm, project, task));
+            taskListPanel.add(new TaskPanel(pm, project, task, onCompletionChanged));
         }
         taskListPanel.revalidate();
         taskListPanel.repaint();
     }
-    
-    // updates the priorities of each task(left to right)
+
     private void updatePriorities(Project project) {
         for(int i = 0; i < project.getTasks().size(); i++){
             project.getTasks().get(i).setPriority(i + 1);

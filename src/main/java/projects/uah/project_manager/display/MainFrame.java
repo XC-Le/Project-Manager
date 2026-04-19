@@ -12,6 +12,7 @@ import com.toedter.calendar.JDateChooser;
 import projects.uah.project_manager.model.*;
 import projects.uah.project_manager.manager.*;
 
+
 /**
  * Mainframe for the entire project
  * Builds the header along with it's buttons
@@ -22,6 +23,7 @@ import projects.uah.project_manager.manager.*;
 public class MainFrame extends JFrame {
 
     private DraggableTabbedPane projectTabs;
+    JButton completeProjectBtn = new JButton("Complete");
     
     /**
      * Creates MainFrame for project
@@ -43,6 +45,8 @@ public class MainFrame extends JFrame {
         JButton editDetailsBtn = new JButton("Edit Details");
         JButton editPriorityBtn = new JButton("Edit Priority");
         JButton delProjectLst = new JButton("Deleted Projects");
+        JButton completedProjectsBtn = new JButton("Completed Projects");
+        completeProjectBtn.setVisible(false);
         
         JPanel topBar = new JPanel(new BorderLayout());
 
@@ -50,12 +54,14 @@ public class MainFrame extends JFrame {
         JPanel leftBtns = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftBtns.add(addProjectBtn);
         leftBtns.add(delProjectBtn);
+        leftBtns.add(completeProjectBtn);
         
         // Right buttons 
         JPanel rightBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightBtns.add(editDetailsBtn);
         rightBtns.add(editPriorityBtn);
         rightBtns.add(delProjectLst);
+        rightBtns.add(completedProjectsBtn);
 
         topBar.add(leftBtns, BorderLayout.WEST);
         topBar.add(rightBtns, BorderLayout.EAST);
@@ -63,6 +69,8 @@ public class MainFrame extends JFrame {
         // Tabbed pane 
         projectTabs = new DraggableTabbedPane(pm);
         projectTabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        //updates Complete button when switching tabs
+        projectTabs.addChangeListener(ce -> checkProjectCompletion(pm, completeProjectBtn));
 
         // Listeners 
         
@@ -318,7 +326,90 @@ public class MainFrame extends JFrame {
             dialog.add(bottomBtns, BorderLayout.SOUTH);
             dialog.setVisible(true);
         });
+        // listener for completed projects button
+        completedProjectsBtn.addActionListener(e -> {
+            if(pm.getCompletedProjects().isEmpty()){
+                JOptionPane.showMessageDialog(this, "No completed projects.");
+                return;
+            }
+            String[] completedNames = pm.getCompletedProjects().stream()
+                .map(p -> p.getName() + "  |  Created: " + (p.getCreationDate() != null ? p.getCreationDate() : "Unknown"))
+                .toArray(String[]::new);
+            JDialog dialog = new JDialog(this, "Completed Projects", true);
+            dialog.setSize(400, 300);
+            dialog.setLocationRelativeTo(this);
+            dialog.setLayout(new BorderLayout());
+
+            JList<String> completedList = new JList<>(completedNames);
+            dialog.add(new JScrollPane(completedList), BorderLayout.CENTER);
+
+            JButton restartBtn = new JButton("Restart");
+            restartBtn.addActionListener(re -> {
+                int index = completedList.getSelectedIndex();
+                if(index == -1){
+                    JOptionPane.showMessageDialog(dialog, "Please select a project to restart.");
+                    return;
+                }
+                Project restarted = pm.getCompletedProjects().get(index);
+                // reset all tasks and subtasks to incomplete
+                for(Task t : restarted.getTasks()){
+                    t.setCompletion(false);
+                    for(Subtask s : t.getSubtasks()){
+                        s.setCompletion(false);
+                    }
+                }
+                restarted.setActive(true);
+                pm.getCompletedProjects().remove(index);
+                pm.addProject(restarted);
+                reloadTabs(pm);
+                dialog.dispose();
+                DataManager.save(pm);
+            });
+
+            JButton permDeleteBtn = new JButton("Delete Permanently");
+            permDeleteBtn.addActionListener(pd -> {
+                int index = completedList.getSelectedIndex();
+                if(index == -1){
+                    JOptionPane.showMessageDialog(dialog, "Please select a project to delete.");
+                    return;
+                }
+                int confirm = JOptionPane.showConfirmDialog(
+                    dialog,
+                    "Are you sure? This cannot be undone.",
+                    "Confirm Permanent Delete",
+                    JOptionPane.YES_NO_OPTION
+                );
+                if(confirm == JOptionPane.YES_OPTION){
+                    pm.getCompletedProjects().remove(index);
+                    dialog.dispose();
+                    DataManager.save(pm);
+                }
+            });
+
+            JPanel bottomBtns = new JPanel(new FlowLayout());
+            bottomBtns.add(restartBtn);
+            bottomBtns.add(permDeleteBtn);
+            dialog.add(bottomBtns, BorderLayout.SOUTH);
+            dialog.setVisible(true);
+        });
         
+        //listener for the complete project button
+        completeProjectBtn.addActionListener(e -> {
+            int index = projectTabs.getSelectedIndex();
+            if(index == -1) return;
+            int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to mark this project as complete?",
+                "Complete Project",
+                JOptionPane.YES_NO_OPTION
+            );
+            if(choice == JOptionPane.YES_OPTION){
+                pm.completeProject(index);
+                projectTabs.removeTabAt(index);
+                checkProjectCompletion(pm, completeProjectBtn);
+                DataManager.save(pm);
+            }
+        });
         // Border modifications 
         topBar.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1)); 
         projectTabs.setBorder(new CompoundBorder(
@@ -345,9 +436,25 @@ public class MainFrame extends JFrame {
     private void reloadTabs(ProjectManager pm) {
         projectTabs.removeAll();
         for (Project project : pm.getProjects()) {
-            projectTabs.addTab(project.getName(), new ProjectPanel(pm, project));
+            projectTabs.addTab(project.getName(), new ProjectPanel(pm, project,
+                () -> checkProjectCompletion(pm, completeProjectBtn)));
         }
         projectTabs.revalidate();
-        projectTabs.repaint();    
+        projectTabs.repaint();  
+        checkProjectCompletion(pm, completeProjectBtn);
+    }
+    private void checkProjectCompletion(ProjectManager pm, JButton completeProjectBtn) {
+        int index = projectTabs.getSelectedIndex();
+        if(index == -1 || index >= pm.getProjects().size()){
+            completeProjectBtn.setVisible(false);
+            return;
+        }
+        Project selected = pm.getProjects().get(index);
+        if(selected.getTasks().isEmpty()){
+            completeProjectBtn.setVisible(false);
+            return;
+        }
+        boolean allComplete = selected.getTasks().stream().allMatch(Task::getCompletion);
+        completeProjectBtn.setVisible(allComplete);
     }
 }
