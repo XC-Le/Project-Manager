@@ -77,19 +77,21 @@ public class MainFrame extends JFrame {
         // listener for add button
         addProjectBtn.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(this, "Project name:");
+            // checks if project name exists
             boolean exists = pm.getProjects().stream().anyMatch(p -> p.getName().equalsIgnoreCase(name));
             if(exists){
                 JOptionPane.showMessageDialog(this, "A project with that name already exists.");
             } else if (name != null && !name.isBlank()) {
+                // gets description
                 String description = JOptionPane.showInputDialog(this, "Project description:");
                 
                 LocalDate dueDate = null;
-                
+                // date chooser with future dates
                 JDateChooser dateChooser = new JDateChooser();
-                dateChooser.setMinSelectableDate(new Date()); // Prevent past dates
+                dateChooser.setMinSelectableDate(new Date());
 
                 Object[] message = {"Select a due date:", dateChooser};
-
+                // gets dates 
                 int option = JOptionPane.showConfirmDialog(null, message, "Due Date", JOptionPane.OK_CANCEL_OPTION);
 
                 if (option == JOptionPane.OK_OPTION) {
@@ -97,20 +99,23 @@ public class MainFrame extends JFrame {
                     dueDate = LocalDate.ofInstant(selectedDate.toInstant(), ZoneId.systemDefault());
                 }
                 
+                // adds project and reloads the tabs
                 pm.addProject(new Project(name, description, dueDate, true));
                 reloadTabs(pm);
                 projectTabs.setSelectedIndex(projectTabs.getTabCount() - 1);
-                DataManager.save(pm);
+                DataManager.save(pm); // saves data
             }
         });
         
         // listener for delete button
         delProjectBtn.addActionListener(e -> {
+            // gets project names
             String[] projectNames = pm.getProjects().stream().map(Project::getName).toArray(String[]::new);
             if(pm.getProjects().isEmpty()){
                 JOptionPane.showMessageDialog(this, "No projects to delete.");
                 return;
             }
+            // single selection project
             JList<String> project_list = new JList<>(projectNames);
             project_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             project_list.setSelectedIndex(0);
@@ -121,6 +126,7 @@ public class MainFrame extends JFrame {
                 JOptionPane.OK_CANCEL_OPTION
             );
             if(select_project == JOptionPane.OK_OPTION){
+                // double check if we should delete project
                 int double_check = JOptionPane.showConfirmDialog(
                     this,
                     "Are you sure?",
@@ -128,6 +134,7 @@ public class MainFrame extends JFrame {
                     JOptionPane.YES_NO_OPTION
                 );
                 if(double_check == JOptionPane.YES_OPTION){
+                    // deletes project and saves
                     int index = project_list.getSelectedIndex();
                     pm.removeProject(index);
                     projectTabs.removeTabAt(index);
@@ -138,6 +145,7 @@ public class MainFrame extends JFrame {
         
         //listener for the edit button
         editDetailsBtn.addActionListener(e -> {
+            // project names and menu options
             String[] projectNames = pm.getProjects().stream().map(Project::getName).toArray(String[]::new);
             String[] projectDetails = {"Name", "Description", "Due Date", "Tasks"};
             String[] taskDetails = {"Name", "Description", "Priority", "Completion", "Due Date", "Subtasks"};
@@ -147,13 +155,15 @@ public class MainFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "No projects to edit.");
                 return;
             }
+            // initializes the JLists for the JOptionPane
             JList<String> project_list = new JList<>(projectNames);
             JList<String> project_details = new JList<>(projectDetails);
             JList<String> task_details = new JList<>(taskDetails);
             JList<String> subtask_details = new JList<>(subtaskDetails);
+            
+            // single selection of project to edit
             project_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             project_list.setSelectedIndex(0);
-            
             int select_project = JOptionPane.showConfirmDialog(
                 this,
                 new JScrollPane(project_list),
@@ -161,6 +171,7 @@ public class MainFrame extends JFrame {
                 JOptionPane.OK_CANCEL_OPTION
             );
             if(select_project == JOptionPane.OK_OPTION){
+                // single selection of project detail to edit
                 Project p = pm.getProject(project_list.getSelectedIndex());
                 project_details.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 project_details.setSelectedIndex(0);
@@ -171,16 +182,20 @@ public class MainFrame extends JFrame {
                     JOptionPane.OK_CANCEL_OPTION
                 );
                 int project_index = project_details.getSelectedIndex();
+                // determines what detail we edit
                 switch(project_index){
                     case 0 -> {
+                        // edits project name
                         String new_project_name = JOptionPane.showInputDialog(this, "Enter new project name:");
                         if(new_project_name != null && !new_project_name.isBlank()){p.setName(new_project_name);}
                     }
                     case 1 -> {
+                        // edits project detail
                         String new_project_description = JOptionPane.showInputDialog(this, "Enter new project description:");
                         if(new_project_description != null && !new_project_description.isBlank())p.setDescription(new_project_description);
                     }
                     case 2 -> {
+                        // edits project due date
                         JDateChooser dateChooser = new JDateChooser();
                         dateChooser.setMinSelectableDate(new Date());
 
@@ -195,8 +210,11 @@ public class MainFrame extends JFrame {
                         }
                     }
                     case 3 -> {
+                        // edits project tasks and gets single selection of task to edit
                         String[] taskNames = p.getTasks().stream().map(Task::getName).toArray(String[]::new);
                         JList<String> task_names = new JList<>(taskNames);
+                        task_names.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                        task_names.setSelectedIndex(0);
                         JOptionPane.showConfirmDialog(
                                 this,
                                 new JScrollPane(task_names),
@@ -212,22 +230,26 @@ public class MainFrame extends JFrame {
                                 "Select a detail to edit",
                                 JOptionPane.OK_CANCEL_OPTION
                         ); 
-                        
+                        // determines what detail of task to edit 
                         int task_index = task_details.getSelectedIndex();
                         switch(task_index){
                             case 0 -> {
+                                // edits task name
                                 String new_task_name = JOptionPane.showInputDialog(this, "Enter new task name:");
                                 if(new_task_name != null && !new_task_name.isBlank()){t.setName(new_task_name);}
                             }
                             case 1 -> {
+                                // edits task description
                                 String new_task_description = JOptionPane.showInputDialog(this, "Enter new task description:");
                                 if(new_task_description != null && !new_task_description.isBlank()){t.setName(new_task_description);}
                             }
                             case 2 -> {
+                                // edits task priority
                                 int new_task_priority = Integer.parseInt(JOptionPane.showInputDialog(this, "Enter new task priority:"));
                                 t.setPriority(new_task_priority);
                             }
                             case 3 -> {
+                                // edits task completion
                                 int completion_check = JOptionPane.showConfirmDialog(
                                     this, 
                                     "Toggle completion?", 
@@ -239,6 +261,7 @@ public class MainFrame extends JFrame {
                                 }
                             }
                             case 4 -> {
+                                // edits task due date
                                 JDateChooser dateChooser = new JDateChooser();
                                 dateChooser.setMinSelectableDate(new Date());
 
@@ -253,6 +276,7 @@ public class MainFrame extends JFrame {
                                 }
                             }
                             case 5 -> {
+                                // edits task's subtasks and gets single selection of subtask to edit
                                 String[] subtaskNames = t.getSubtasks().stream().map(Subtask::getName).toArray(String[]::new);
                                 JList<String> subtask_names = new JList<>(subtaskNames);
                                 JOptionPane.showConfirmDialog(
@@ -274,10 +298,12 @@ public class MainFrame extends JFrame {
                                 int subtask_index = subtask_details.getSelectedIndex();
                                 switch(subtask_index){
                                     case 0 -> {
+                                        // edits subtasks name
                                         String new_task_name = JOptionPane.showInputDialog(this, "Enter new task name:");
                                         if(new_task_name != null && !new_task_name.isBlank()){st.setName(new_task_name);}
                                     }
                                     case 1 -> {
+                                        // edits subtasks completion
                                         int completion_check = JOptionPane.showConfirmDialog(
                                             this, 
                                             "Toggle completion?", 
@@ -289,6 +315,7 @@ public class MainFrame extends JFrame {
                                         }
                                     }
                                     case 2 -> {
+                                        // edits subtasks due date
                                         JDateChooser dateChooser = new JDateChooser();
                                         dateChooser.setMinSelectableDate(new Date());
 
