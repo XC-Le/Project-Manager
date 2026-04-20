@@ -133,9 +133,6 @@ public class Task {
      */
     public void setCompletion(boolean isComplete) {
         this.isComplete = isComplete;
-        for(Subtask st : subtasks){
-            //st.setCompletion(isComplete);
-        }
     }
     
     public List<Subtask> getSubtasks(){

@@ -258,6 +258,10 @@ public class MainFrame extends JFrame {
                                 );
                                 if(completion_check == JOptionPane.YES_OPTION){
                                     t.setCompletion(!t.getCompletion());
+                                    for(Subtask s : t.getSubtasks()){
+                                        s.setCompletion(true);
+                                    }
+                                    DataManager.save(pm);
                                 }
                             }
                             case 4 -> {
