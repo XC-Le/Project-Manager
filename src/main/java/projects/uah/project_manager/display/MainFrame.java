@@ -303,7 +303,7 @@ public class MainFrame extends JFrame {
                                 switch(subtask_index){
                                     case 0 -> {
                                         // edits subtasks name
-                                        String new_task_name = JOptionPane.showInputDialog(this, "Enter new task name:");
+                                        String new_task_name = JOptionPane.showInputDialog(this, "Enter new subtask name:");
                                         if(new_task_name != null && !new_task_name.isBlank()){st.setName(new_task_name);}
                                         DataManager.save(pm);
                                     }
