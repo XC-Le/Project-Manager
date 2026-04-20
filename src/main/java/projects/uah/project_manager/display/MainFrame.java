@@ -527,10 +527,20 @@ public class MainFrame extends JFrame {
      */
     private void reloadTabs(ProjectManager pm) {
         projectTabs.removeAll();
-        for (Project project : pm.getProjects()) {
-            projectTabs.addTab(project.getName(), new ProjectPanel(pm, project,
-                () -> checkProjectCompletion(pm, completeProjectBtn)));
+        try {
+            for (Project project : pm.getProjects()) {
+                projectTabs.addTab(project.getName(), new ProjectPanel(pm, project,
+                    () -> checkProjectCompletion(pm, completeProjectBtn)));
+            }
+        } catch (java.util.ConcurrentModificationException e) {
+            System.out.println("ConcurrentModificationException caught, retrying...");
+            projectTabs.removeAll();
+            for (Project project : pm.getProjects()) {
+                projectTabs.addTab(project.getName(), new ProjectPanel(pm, project,
+                    () -> checkProjectCompletion(pm, completeProjectBtn)));
+            }
         }
+            
         projectTabs.revalidate();
         projectTabs.repaint();  
         checkProjectCompletion(pm, completeProjectBtn);
