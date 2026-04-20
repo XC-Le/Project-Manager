@@ -289,7 +289,7 @@ public class MainFrame extends JFrame {
                                         "Select a subtask to edit",
                                         JOptionPane.OK_CANCEL_OPTION 
                                 );
-                                Subtask st  = t.getSubtask(task_names.getSelectedIndex());
+                                Subtask st  = t.getSubtask(subtask_names.getSelectedIndex());
                                 subtask_details.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                                 subtask_details.setSelectedIndex(0);
                                 JOptionPane.showConfirmDialog(
@@ -305,6 +305,7 @@ public class MainFrame extends JFrame {
                                         // edits subtasks name
                                         String new_task_name = JOptionPane.showInputDialog(this, "Enter new task name:");
                                         if(new_task_name != null && !new_task_name.isBlank()){st.setName(new_task_name);}
+                                        DataManager.save(pm);
                                     }
                                     case 1 -> {
                                         // edits subtasks completion
@@ -316,6 +317,7 @@ public class MainFrame extends JFrame {
                                         );
                                         if(completion_check == JOptionPane.YES_OPTION){
                                             st.setCompletion(!st.getCompletion());
+                                            DataManager.save(pm);
                                         }
                                     }
                                     case 2 -> {
