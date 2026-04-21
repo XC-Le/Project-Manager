@@ -24,7 +24,6 @@ public class MainFrame extends JFrame {
 
     private DraggableTabbedPane projectTabs;
     JButton completeProjectBtn = new JButton("Complete");
-    JButton editDetailsBtn = new JButton("Edit Details");
     
     /**
      * Creates MainFrame for project
@@ -43,7 +42,7 @@ public class MainFrame extends JFrame {
         // Top button bar
         JButton addProjectBtn = new JButton("New Project");
         JButton delProjectBtn = new JButton("Delete Project");
-        
+        JButton editDetailsBtn = new JButton("Edit Details");
         JButton editPriorityBtn = new JButton("Edit Priority");
         JButton delProjectLst = new JButton("Deleted Projects");
         JButton completedProjectsBtn = new JButton("Completed Projects");
@@ -538,8 +537,7 @@ public class MainFrame extends JFrame {
             projectTabs.removeAll();
             for (Project project : pm.getProjects()) {
                 projectTabs.addTab(project.getName(), new ProjectPanel(pm, project,
-                    () -> checkProjectCompletion(pm, editDetailsBtn)));
-                editDetailsBtn.setVisible(true);
+                    () -> checkProjectCompletion(pm, completeProjectBtn)));
             }
         }
             
