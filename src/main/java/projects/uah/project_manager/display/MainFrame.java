@@ -65,7 +65,6 @@ public class MainFrame extends JFrame {
 
         topBar.add(leftBtns, BorderLayout.WEST);
         topBar.add(rightBtns, BorderLayout.EAST);
-        topBar.setPreferredSize(new Dimension(900, 40));
         
         // Tabbed pane 
         projectTabs = new DraggableTabbedPane(pm);
