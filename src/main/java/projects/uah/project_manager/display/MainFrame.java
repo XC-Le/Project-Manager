@@ -33,8 +33,8 @@ public class MainFrame extends JFrame {
     public MainFrame(ProjectManager pm) {
         // Window settings
         setTitle("Project Manager");
-        setSize(900, 600);
-        setMinimumSize(new Dimension(900, 600));
+        setSize(1000, 600);
+        setMinimumSize(new Dimension(1000, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -47,8 +47,6 @@ public class MainFrame extends JFrame {
         JButton delProjectLst = new JButton("Deleted Projects");
         JButton completedProjectsBtn = new JButton("Completed Projects");
         completeProjectBtn.setVisible(false);
-        completeProjectBtn.setPreferredSize(new Dimension(85,30));
-        completeProjectBtn.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         
         JPanel topBar = new JPanel(new BorderLayout());
 
@@ -67,6 +65,7 @@ public class MainFrame extends JFrame {
 
         topBar.add(leftBtns, BorderLayout.WEST);
         topBar.add(rightBtns, BorderLayout.EAST);
+        topBar.setPreferredSize(new Dimension(900, 40));
         
         // Tabbed pane 
         projectTabs = new DraggableTabbedPane(pm);
