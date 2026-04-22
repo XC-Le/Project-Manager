@@ -8,7 +8,7 @@ import java.util.List;
  * Represents a task within a project in the Project Manager application.
  * A task has a name, description, due date, and a priority level.
  *
- * @authors XC-Le and Duncan Williams
+ * @author XC-Le, Duncan Williams, WhispyWaddle
  * @version 1.3
  */
 public class Task {

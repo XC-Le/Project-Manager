@@ -97,7 +97,7 @@ public class ProjectManager {
     /**
      * Sets the list of deleted projects
      * 
-     * @param projects 
+     * @param del_projects 
      */
     public void setDeletedProjects(List<Project> del_projects){
         this.del_projects = del_projects;
@@ -113,7 +113,7 @@ public class ProjectManager {
     /**
      * Sets the list of deleted projects
      * 
-     * @param projects 
+     * @param completed_projects 
      */
     public void setCompletedProjects(List<Project> completed_projects) {
         this.completed_projects.clear();
