@@ -49,7 +49,10 @@ Create a project using the **New Project** button, then give it a title, descrip
 - Restore or permanently delete removed subtasks using the **Deleted Subtasks** button
 
 ---
+## Storage
+- Projects will be automatically stored in the file path "C:\Users\[username]\ProjectManager\projects.json"
 
+---
 ## Authors
 
 - XC-Le
