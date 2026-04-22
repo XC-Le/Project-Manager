@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class DataManager {
 
-    private static final String SAVE_FILE = "projects.json";
+    private static final String SAVE_FILE = System.getProperty("user.home") + "/ProjectManager/projects.json";
 
     // Gson needs instructions on how to save and load LocalDate since it isn't primitive
     private static final Gson gson = new GsonBuilder()
@@ -32,6 +32,7 @@ public class DataManager {
      * @param pm the ProjectManager containing all project data to save
      */
     public static void save(ProjectManager pm) {
+        new java.io.File(System.getProperty("user.home") + "/ProjectManager").mkdirs();
         SaveData to_save = new SaveData(pm.getProjects(), pm.getDeletedProjects(), pm.getCompletedProjects());
         try(Writer writer = new FileWriter(SAVE_FILE)){
             gson.toJson(to_save, writer);
