@@ -53,6 +53,7 @@ Create a project using the **New Project** button, then give it a title, descrip
 - Projects will be automatically stored in the file path "C:\Users\[username]\ProjectManager\projects.json"
 - File is automatically created when you create a new project
 - Feel free to move the optional projects.json in the root folder to the file path above for some example projects!
+- If you do use the examples, close out of the program and re-open it if you had it open when you made the change
 ---
 ## Authors
 
