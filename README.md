@@ -1,24 +1,61 @@
-Hello! This program serves as a tool for you to manage any projects you need to work on.
+# Taskboard To-Do
 
-Create a Project using the "New Project" button, then give it a title, description, and a due date!
-    
-   Tasks:
-    You can add Tasks to the Project by clicking the "New Task" button via the same process(minus due date)
-    After that, you can check the details by clicking the "Details" button on the right. 
-    If you have completed the task, use the "Edit Details" button on the top to navigate to the completed task, and mark it complete.
-   Subtasks:
-    You can also add subtasks via the "Add Subtask" button. This has the same process as tasks, except they just have a title.
-    If you have subtasks for a task, you can check them off as you complete them, and once they're all done, the task will auto-update to Completed!
+A project management tool built in Java that helps you organize and track your projects, tasks, and subtasks.
 
-You are able to delete Projects, Tasks, and Subtasks using their respective delete buttons.
-You can delete permanently or restore deleted items by using the "Deleted Projects", "Deleted Tasks", and "Deleted Subtasks" buttons.
+---
 
-If you have multiple projects:
-    You can click between each project tab through the bar underneath the "New Project" button. 
-    You can edit the priority of which they appear (left=highest -> right=lowest) by using the "Edit Priority" button. 
-    Once you toggle it on, you can drag each project to your designated spot.
+## Getting Started
 
-Once you complete a Project, you will have the option to put it in the Completed Projects log, where you can choose to restart the Project, or delete it permanently.
-If you don't, a "Complete" button will appear so you can put the Project there when you're done with it.
+Create a project using the **New Project** button, then give it a title, description, and a due date!
 
-We hope you enjoy the program!
+---
+
+## Projects
+
+- Use the **New Project** button to create a project
+- Use the **Delete Project** button to remove a project
+- Use the **Edit Details** button to edit a project's name, description, due date, and more
+- Use the **Details** button within a project to view its information
+- Use the **Deleted Projects** button to restore or permanently delete removed projects
+
+### Priority
+- Click between project tabs using the tab bar underneath the top buttons
+- Use the **Edit Priority** button to toggle drag mode — drag tabs left or right to reorder them
+- Left = highest priority → Right = lowest priority
+
+### Completing a Project
+- Once all tasks in a project are complete, you will be prompted to move it to the **Completed Projects** log
+- If you decline, a **Complete** button will appear next to **Delete Project** whenever you're ready
+- In the Completed Projects log, you can **Restart** a project or **Delete it Permanently**
+
+---
+
+## Tasks
+
+- Add tasks to a project using the **New Task** button — give it a name and description
+- View task details using the **Details** button on the right side of the project panel
+- Mark a task complete through the **Edit Details** button on the top bar
+- Delete tasks using the **Delete Task** button
+- Restore or permanently delete removed tasks using the **Deleted Tasks** button
+
+---
+
+## Subtasks
+
+- Add subtasks to a task using the **Add Subtask** button — just give it a name
+- Check off subtasks as you complete them using the checkboxes
+- Once **all subtasks** are checked off, the task will **automatically mark itself as complete!**
+- Delete subtasks using the **Delete Subtask** button
+- Restore or permanently delete removed subtasks using the **Deleted Subtasks** button
+
+---
+
+## Authors
+
+- XC-Le
+- Duncan Williams
+- WhispyWaddle
+
+---
+
+*We hope you enjoy the program!*
