@@ -174,7 +174,18 @@
           "deletedSubtasks": []
         }
       ],
-      "deletedTasks": []
+      "deletedTasks": [
+        {
+          "name": "aaa",
+          "description": "aaa",
+          "creationDate": "2026-04-22",
+          "dueDate": "2026-04-22",
+          "priority": 5,
+          "isComplete": false,
+          "subtasks": [],
+          "deletedSubtasks": []
+        }
+      ]
     }
   ],
   "del_projects": [],

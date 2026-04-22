@@ -6,7 +6,14 @@ import java.time.LocalDate;
 import javax.swing.border.CompoundBorder;
 import projects.uah.project_manager.manager.*;
 import projects.uah.project_manager.model.*;
-
+/**
+ * A Swing panel that displays an individual task's details and subtask checklist.
+ * Manages subtask addition, deletion, completion tracking, and deleted subtask recovery.
+ * Notifies the parent frame of project completion via a Runnable callback.
+ *
+ * @author XC-Le, Duncan Williams, and WhispyWaddle
+ * @version 1.1
+ */
 public class TaskPanel extends JPanel {
 
     JPanel subtaskListPanel = new JPanel();

@@ -5,124 +5,129 @@ import projects.uah.project_manager.model.Project;
 import java.util.List;
 
 /**
- * Manages a collection of projects within the Project Manager application.
- * Provides functionality to add, remove, retrieve, and list projects.
+ * Manages the collections of active, deleted, and completed projects
+ * within the Project Manager application.
+ * Provides functionality to add, remove, complete, retrieve, and list projects.
  *
- * @author XC-Le
- * @version 1.0
+ * @author XC-Le, Duncan Williams, and WhispyWaddle
+ * @version 1.1
  */
 public class ProjectManager {
 
     private java.util.List<Project> projects = new ArrayList<>();
     private java.util.List<Project> del_projects = new ArrayList<>();
     private java.util.List<Project> completed_projects = new ArrayList<>();
-    
+
     /**
-     * Constructs a new ProjectManager with an empty project list.
+     * Constructs a new ProjectManager with empty project lists.
      */
     public ProjectManager() {
-        
     }
-    
+
     /**
-     * Adds a project object to the project list
-     * 
-     * @param project Project object that is being added
+     * Adds a project to the active project list.
+     *
+     * @param project the project to add
      */
-    public void addProject(Project project){
+    public void addProject(Project project) {
         projects.add(project);
     }
-    
+
     /**
-     * Moves a project by removing a project from the list and reinserting it elsewhere
-     * 
-     * @param project object that is being moved
-     * @param initialIndex of the project being moved from
-     * @param finalIndex of where to project is moved to
+     * Moves a project from one position to another in the active project list.
+     *
+     * @param project      the project to move
+     * @param initialIndex the index to move from
+     * @param finalIndex   the index to move to
      */
-    public void moveProject(Project project, int initialIndex, int finalIndex){
+    public void moveProject(Project project, int initialIndex, int finalIndex) {
         projects.remove(initialIndex);
         projects.add(finalIndex, project);
     }
-    
+
     /**
-     * Removes a project from the list
-     * 
-     * @param index of project being removed
+     * Removes a project from the active list and moves it to the deleted list.
+     *
+     * @param index the index of the project to remove
      */
-    public void removeProject(int index){
+    public void removeProject(int index) {
         projects.get(index).setActive(false);
         del_projects.add(projects.get(index));
         projects.remove(index);
     }
-    
+
     /**
-     * Returns list of all projects
-     * 
-     * @return projects
+     * Moves a project from the active list to the completed list.
+     *
+     * @param index the index of the project to complete
      */
-    public List<Project> getProjects(){
+    public void completeProject(int index) {
+        completed_projects.add(projects.get(index));
+        projects.remove(index);
+    }
+
+    /**
+     * Returns the list of active projects.
+     *
+     * @return list of active projects
+     */
+    public List<Project> getProjects() {
         return projects;
     }
-    
-    
+
     /**
-     * Sets the list of projects
-     * 
-     * @param projects 
+     * Sets the list of active projects.
+     *
+     * @param projects the new list of active projects
      */
-    public void setProjects(List<Project> projects){
+    public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
-    
+
     /**
-     * Returns the one project from the list of projects
-     * 
-     * @param index of project 
-     * @return project at index
+     * Returns a single active project by index.
+     *
+     * @param index the index of the project
+     * @return the project at the given index
      */
-    public Project getProject(int index){
+    public Project getProject(int index) {
         return projects.get(index);
     }
-    
+
     /**
-     * Returns list of all deleted projects
-     * 
-     * @return del_projects
+     * Returns the list of deleted projects.
+     *
+     * @return list of deleted projects
      */
-    public List<Project> getDeletedProjects(){
+    public List<Project> getDeletedProjects() {
         return del_projects;
     }
-    
+
     /**
-     * Sets the list of deleted projects
-     * 
-     * @param del_projects 
+     * Sets the list of deleted projects.
+     *
+     * @param del_projects the new list of deleted projects
      */
-    public void setDeletedProjects(List<Project> del_projects){
+    public void setDeletedProjects(List<Project> del_projects) {
         this.del_projects = del_projects;
     }
+
     /**
-     * Returns list of all completed projects
-     * 
-     * @return completed_projects
+     * Returns the list of completed projects.
+     *
+     * @return list of completed projects
      */
     public List<Project> getCompletedProjects() {
         return completed_projects;
     }
+
     /**
-     * Sets the list of deleted projects
-     * 
-     * @param completed_projects 
+     * Sets the list of completed projects.
+     *
+     * @param completed_projects the new list of completed projects
      */
     public void setCompletedProjects(List<Project> completed_projects) {
         this.completed_projects.clear();
         this.completed_projects.addAll(completed_projects);
-    }
-    
-    // adds a project to the completed projects list
-    public void completeProject(int index) {
-        completed_projects.add(projects.get(index));
-        projects.remove(index);
     }
 }

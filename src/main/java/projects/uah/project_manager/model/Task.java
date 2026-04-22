@@ -9,7 +9,7 @@ import java.util.List;
  * A task has a name, description, due date, and a priority level.
  *
  * @author XC-Le, Duncan Williams, WhispyWaddle
- * @version 1.3
+ * @version 1.0
  */
 public class Task {
 
@@ -21,6 +21,7 @@ public class Task {
     private boolean isComplete;
     private List<Subtask> subtasks;
     private List<Subtask> deletedSubtasks = new ArrayList<>();
+
     /**
      * Constructs a new Task with the specified details.
      *
@@ -38,7 +39,6 @@ public class Task {
         this.priority = priority;
         this.isComplete = isComplete;
         this.subtasks = new ArrayList<>();
-        
     }
 
     /**
@@ -77,10 +77,15 @@ public class Task {
         this.description = description;
     }
 
+    /**
+     * Returns the creation date of the task.
+     *
+     * @return the task creation date
+     */
     public LocalDate getCreationDate() {
         return this.creationDate;
     }
-    
+
     /**
      * Returns the due date of the task.
      *
@@ -116,7 +121,7 @@ public class Task {
     public void setPriority(int priority) {
         this.priority = priority;
     }
- 
+
     /**
      * Returns whether the task is complete or not.
      *
@@ -129,32 +134,58 @@ public class Task {
     /**
      * Sets whether the task is complete or not.
      *
-     * @param isComplete true = task is finished, false = task is not finished
+     * @param isComplete true if the task is finished, false if not
      */
     public void setCompletion(boolean isComplete) {
         this.isComplete = isComplete;
     }
-    
-    public List<Subtask> getSubtasks(){
+
+    /**
+     * Returns the list of active subtasks for this task.
+     *
+     * @return list of subtasks
+     */
+    public List<Subtask> getSubtasks() {
         return this.subtasks;
     }
-    
-    public Subtask getSubtask(int index){
+
+    /**
+     * Returns a single subtask by index.
+     *
+     * @param index the index of the subtask
+     * @return the subtask at the given index
+     */
+    public Subtask getSubtask(int index) {
         return subtasks.get(index);
     }
-    
+
+    /**
+     * Returns the list of deleted subtasks for this task.
+     *
+     * @return list of deleted subtasks
+     */
     public List<Subtask> getDeletedSubtasks() {
         if(deletedSubtasks == null) deletedSubtasks = new ArrayList<>();
         return this.deletedSubtasks;
     }
-    
-    public void addSubtask(Subtask subtask){
+
+    /**
+     * Adds a subtask to the active subtask list.
+     *
+     * @param subtask the subtask to add
+     */
+    public void addSubtask(Subtask subtask) {
         this.subtasks.add(subtask);
     }
-    
+
+    /**
+     * Removes a subtask by index and moves it to the deleted subtask list.
+     *
+     * @param index the index of the subtask to remove
+     */
     public void removeSubtask(int index) {
         if(deletedSubtasks == null) deletedSubtasks = new ArrayList<>();
         deletedSubtasks.add(subtasks.get(index));
         subtasks.remove(index);
-}
+    }
 }

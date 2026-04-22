@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a project in the Project Manager
+ * Represents a project in the Project Manager application.
  * A project has a name, description, due date, and a status
  * indicating whether it is active or complete.
  *
- * @author XC-Le
+ * @author XC-Le, Duncan Williams, and WhispyWaddle
  * @version 1.0
  */
 public class Project {
@@ -21,8 +21,7 @@ public class Project {
     private boolean isActive;
     private List<Task> tasks;
     private List<Task> deletedTasks = new ArrayList<>();
-    
-    
+
     /**
      * Constructs a new Project with the specified details.
      *
@@ -32,13 +31,12 @@ public class Project {
      * @param isActive    true if the project is active, false if complete
      */
     public Project(String name, String description, LocalDate dueDate, boolean isActive) {
-        this.name=name;
-        this.description=description;
-        this.creationDate=LocalDate.now();
-        this.dueDate=dueDate;
-        this.isActive=isActive;
+        this.name = name;
+        this.description = description;
+        this.creationDate = LocalDate.now();
+        this.dueDate = dueDate;
+        this.isActive = isActive;
         this.tasks = new ArrayList<>();
-        
     }
 
     /**
@@ -56,7 +54,7 @@ public class Project {
      * @param name the new project name
      */
     public void setName(String name) {
-        this.name=name;
+        this.name = name;
     }
 
     /**
@@ -74,14 +72,18 @@ public class Project {
      * @param description the new project description
      */
     public void setDescription(String description) {
-        this.description=description;
+        this.description = description;
     }
 
-    
-    public LocalDate getCreationDate(){
+    /**
+     * Returns the creation date of the project.
+     *
+     * @return the project creation date
+     */
+    public LocalDate getCreationDate() {
         return this.creationDate;
     }
-    
+
     /**
      * Returns the due date of the project.
      *
@@ -97,9 +99,9 @@ public class Project {
      * @param dueDate the new due date
      */
     public void setDueDate(LocalDate dueDate) {
-        this.dueDate=dueDate;
+        this.dueDate = dueDate;
     }
-    
+
     /**
      * Returns whether the project is currently active.
      *
@@ -115,49 +117,64 @@ public class Project {
      * @param isActive true to mark as active, false to mark as complete
      */
     public void setActive(boolean isActive) {
-        this.isActive=isActive;
+        this.isActive = isActive;
     }
-    
+
     /**
-     * Returns the tasks for the project.
+     * Returns the list of active tasks for this project.
      *
-     * @return the list of tasks
+     * @return list of tasks
      */
     public List<Task> getTasks() {
         return this.tasks;
     }
-    
-    public Task getTask(int index){
+
+    /**
+     * Returns a single task by index.
+     *
+     * @param index the index of the task
+     * @return the task at the given index
+     */
+    public Task getTask(int index) {
         return tasks.get(index);
     }
-    
+
     /**
-     * Returns the deleted tasks for the project.
+     * Returns the list of deleted tasks for this project.
      *
-     * @return the list of deleted tasks
+     * @return list of deleted tasks
      */
     public List<Task> getDeletedTasks() {
         if(deletedTasks == null) deletedTasks = new ArrayList<>();
         return this.deletedTasks;
     }
-    
+
     /**
      * Sets the tasks for the project.
      *
-     * @param tasks the tasks for the project
+     * @param tasks the new list of tasks
      */
     public void setTasks(List<Task> tasks) {
-        this.tasks=tasks;
+        this.tasks = tasks;
     }
-    
-    public void addTask(Task task){
+
+    /**
+     * Adds a task to the active task list.
+     *
+     * @param task the task to add
+     */
+    public void addTask(Task task) {
         this.tasks.add(task);
     }
-    
+
+    /**
+     * Removes a task by index and moves it to the deleted task list.
+     *
+     * @param index the index of the task to remove
+     */
     public void removeTask(int index) {
         if(deletedTasks == null) deletedTasks = new ArrayList<>();
         deletedTasks.add(tasks.get(index));
         tasks.remove(index);
-}
-    
+    }
 }
