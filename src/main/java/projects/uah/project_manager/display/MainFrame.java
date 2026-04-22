@@ -47,6 +47,8 @@ public class MainFrame extends JFrame {
         JButton delProjectLst = new JButton("Deleted Projects");
         JButton completedProjectsBtn = new JButton("Completed Projects");
         completeProjectBtn.setVisible(false);
+        completeProjectBtn.setPreferredSize(new Dimension(85,30));
+        completeProjectBtn.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         
         JPanel topBar = new JPanel(new BorderLayout());
 

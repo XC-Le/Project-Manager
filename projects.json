@@ -13,19 +13,19 @@
           "creationDate": "2026-04-18",
           "dueDate": "2026-04-18",
           "priority": 1,
-          "isComplete": false,
+          "isComplete": true,
           "subtasks": [
             {
               "name": "Wo 1",
               "creationDate": "2026-04-18",
               "dueDate": "2026-04-18",
-              "isComplete": false
+              "isComplete": true
             },
             {
               "name": "No 2",
               "creationDate": "2026-04-18",
               "dueDate": "2026-04-18",
-              "isComplete": false
+              "isComplete": true
             }
           ],
           "deletedSubtasks": []
@@ -36,13 +36,13 @@
           "creationDate": "2026-04-18",
           "dueDate": "2026-04-18",
           "priority": 2,
-          "isComplete": true,
+          "isComplete": false,
           "subtasks": [
             {
               "name": "Wo 2",
               "creationDate": "2026-04-18",
               "dueDate": "2026-04-18",
-              "isComplete": false
+              "isComplete": true
             },
             {
               "name": "Wo 3",
@@ -51,6 +51,26 @@
               "isComplete": true
             }
           ],
+          "deletedSubtasks": []
+        }
+      ],
+      "deletedTasks": []
+    },
+    {
+      "name": "Final Test",
+      "description": "This is the final test",
+      "creationDate": "2026-04-21",
+      "dueDate": "2026-04-22",
+      "isActive": true,
+      "tasks": [
+        {
+          "name": "Testing task",
+          "description": "I am task",
+          "creationDate": "2026-04-21",
+          "dueDate": "2026-04-21",
+          "priority": 1,
+          "isComplete": false,
+          "subtasks": [],
           "deletedSubtasks": []
         }
       ],
